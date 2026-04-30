@@ -208,19 +208,20 @@ if (app.Environment.IsDevelopment())
 }
 #region Master Data
 
-using (var scope = app.Services.CreateScope())
+try
 {
-	var services = scope.ServiceProvider;
-	try
+	using (var scope = app.Services.CreateScope())
 	{
+		var services = scope.ServiceProvider;
 		var context = services.GetRequiredService<TranSmartContext>();
-		await TranSmart.Data.SeedData.TranSmartContextSeed.SeedAsync(context);
-		await TranSmart.Data.SeedData.TranSmartContextData.SeedAsync(context);
+		//await TranSmart.Data.SeedData.TranSmartContextSeed.SeedAsync(context);
+		//await TranSmart.Data.SeedData.TranSmartContextData.SeedAsync(context);
+		Log.Information("Master data seeding disabled for debugging");
 	}
-	catch (Exception ex)
-	{
-		throw new InvalidOperationException(ex.Message);
-	}
+}
+catch (Exception ex)
+{
+	Log.Error(ex, "An error occurred while initializing the database.");
 }
 
 #endregion
@@ -267,11 +268,17 @@ app.UseSwaggerUI(c =>
 });
 try
 {
+	Log.Information("Application starting up...");
 	app.Run();
 }
 catch (Exception ex)
 {
-	throw new Exception(ex.Message);
+	Log.Fatal(ex, "Application terminated unexpectedly");
+	throw;
+}
+finally
+{
+	Log.CloseAndFlush();
 }
 
 
