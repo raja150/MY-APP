@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/server/Transmart.Domain/obj/project.assets.json
+/server/Transmart.Domain/obj
+/server/Transmart.Service/obj
+/server/Transmart.Services.UnitTests/bin
+/server/Transmart.Services.UnitTests/obj
+/server/Transmart.TS4API/obj
+/server/Transmart.Core/obj
+/server/Transmart.Controller.UnitTests/bin
+/server/Transmart.Controller.UnitTests/obj
+/server/.vs/Transmart/CopilotIndices/17.13.441.19478
+/server/Transmart.API/obj
+/server/Transmart.API.IntegrationTest/bin
+/server/Transmart.API.IntegrationTest/obj
+/server/Transmart.Data/obj
