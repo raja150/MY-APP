@@ -1,0 +1,122 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+    <UserSecretsId>916fe3bd-5ec3-478c-b5c6-5745e6b18173</UserSecretsId>
+    <AssemblyName>TranSmart.API</AssemblyName>
+    <RootNamespace>TranSmart.API</RootNamespace>
+    <CodeAnalysisRuleSet>..\.sonarlint\hris_devcsharp.ruleset</CodeAnalysisRuleSet>
+    <Version>1.0.1482</Version>
+    <Title>IHMS</Title>
+    <AssemblyVersion>1.0.1587.1</AssemblyVersion>
+    <FileVersion>1.0.1587.1</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\Generated\**" />
+    <Content Remove="Models\Generated\**" />
+    <EmbeddedResource Remove="Models\Generated\**" />
+    <None Remove="Models\Generated\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\hris_dev\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.Cells" Version="23.2.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="ClosedXML" Version="0.100.3" />
+    <PackageReference Include="Common.Logging" Version="3.4.1" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
+    <PackageReference Include="itext7" Version="7.2.5" />
+    <PackageReference Include="itext7.pdfhtml" Version="4.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.14" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.14">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.12" />
+    <PackageReference Include="MimeTypesMap" Version="1.0.8" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="6.3.2" />
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.4.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Attachments\Tickets\" />
+    <Folder Include="AutoMapper\Generated\" />
+    <Folder Include="Logs\" />
+    <Folder Include="Images\" /> 
+    <Folder Include="XSLT\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Transmart.Core\TranSmart.Core.csproj" />
+    <ProjectReference Include="..\TranSmart.Data\TranSmart.Data.csproj" />
+    <ProjectReference Include="..\Transmart.Domain\TranSmart.Domain.csproj" />
+    <ProjectReference Include="..\Transmart.Service\TranSmart.Service.csproj" />
+    <ProjectReference Include="..\Transmart.TS4API\Transmart.TS4API.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="itext.barcodes">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.barcodes.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.forms">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.forms.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.html2pdf">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.html2pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.io">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.io.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.kernel">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.layout">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.layout.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.pdfa">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.pdfa.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.sign">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.sign.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.styledxmlparser">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.styledxmlparser.dll</HintPath>
+    </Reference>
+    <Reference Include="itext.svg">
+      <HintPath>bin\Debug\netcoreapp3.1\itext.svg.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="XSLT\PaySlip.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="XSLT\Sample.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

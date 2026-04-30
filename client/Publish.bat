@@ -1,0 +1,1 @@
+C:\Windows\System32\inetsrv\appcmd stop site /site.name:HRIS_Client && rmdir /s /q "C:\inetpub\wwwroot\HRIS\Client\" && xcopy D:\Projects_Code\HRIS\client\build C:\inetpub\wwwroot\HRIS\Client /E /H /C /I && C:\Windows\System32\inetsrv\appcmd start site /site.name:HRIS_Client

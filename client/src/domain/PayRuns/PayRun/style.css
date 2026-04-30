@@ -1,0 +1,34 @@
+.table th, .table td {
+  padding: 0.55rem !important;
+}
+
+.table thead th, .table td{
+  border-top: none;
+  border-bottom: 1px solid #e9ecef;
+  border-left: none;
+  border-right: none;
+}
+
+.-pageJump select {
+    width: 50px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px;
+    margin: 0px 4px;
+  }
+
+  .resizer {
+    right: 0;
+    /* background: #000; */
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    touch-action :none
+  }
+
+
+  .-cursor{
+    cursor: pointer;
+  }

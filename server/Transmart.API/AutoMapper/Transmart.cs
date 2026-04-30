@@ -1,0 +1,95 @@
+﻿using AutoMapper;
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TranSmart.Domain.Entities;
+using TranSmart.Domain.Entities.SelfService;
+using TranSmart.Domain.Models.SelfService;
+using TranSmart.Domain.Models.AppSettings;
+using TranSmart.Domain.Entities.Leave;
+using TranSmart.Domain.Models.SelfService.Request;
+using TranSmart.Domain.Entities.AppSettings;
+using TranSmart.Domain.Models.Cache;
+
+namespace TranSmart.API.AutoMapper
+{
+    public class MappingProfile : Profile
+    {
+        public MappingProfile()
+        {
+            CreateMap<ApplyCompo, ApplyCompensatoryWorkingDayList>()
+                .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(x => x.Employee.Name));
+
+
+
+            CreateMap<ChangePassword, User>();
+            CreateMap<User, ChangePassword>();
+
+            CreateMap<ResetPwd, User>();
+            CreateMap<User, ResetPwd>();
+            CreateMap<Group, TranSmart.Domain.Models.Group>();
+            CreateMap<Report, TranSmart.Domain.Models.Report>();
+            CreateMap<TranSmart.Domain.Entities.AppSettings.RolePrivilege, TranSmart.Domain.Models.Cache.RolePrivilegeCache>()
+               .ForMember(dest => dest.GroupId, opt => opt.MapFrom(x => x.Page.GroupId))
+               .ForMember(dest => dest.GroupIcon, opt => opt.MapFrom(x => x.Page.Group.Icon))
+               .ForMember(dest => dest.GroupName, opt => opt.MapFrom(x => x.Page.Group.Name))
+               .ForMember(dest => dest.PageIcon, opt => opt.MapFrom(x => x.Page.Icon))
+               .ForMember(dest => dest.PageName, opt => opt.MapFrom(x => x.Page.DisplayName))
+               .ForMember(dest => dest.PagePath, opt => opt.MapFrom(x => x.Page.Path));
+
+			CreateMap<TranSmart.Domain.Entities.AppSettings.RoleReportPrivilege, TranSmart.Domain.Models.Report>()
+				.ForMember(dest => dest.Name, opt => opt.MapFrom(x => x.Report.Name))
+				.ForMember(dest => dest.Privilege, opt => opt.MapFrom(x => x.Privilege))
+				.ForMember(dest => dest.Label, opt => opt.MapFrom(x => x.Report.Label));
+
+
+			// Add as many of these lines as you need to map your objects
+			// https://dotnettutorials.net/lesson/automapper-in-c-sharp/
+
+			CreateMap<TranSmart.Domain.Entities.Organization.Employee, TranSmart.Domain.Models.Organization.EmployeeAddModel>()
+                .ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(x => x.Department.Name))
+                .ForMember(dest => dest.Designation, opt => opt.MapFrom(x => x.Designation.Name))
+                .ForMember(dest => dest.WorkType, opt => opt.MapFrom(x => x.WorkType.Name))
+                .ForMember(dest => dest.EmployeeTeam, opt => opt.MapFrom(x => x.Team.Name))
+                .ForMember(dest => dest.WorkLocation, opt => opt.MapFrom(x => x.WorkLocation.Name))
+                .ForMember(dest => dest.AadhaarNumber, opt => opt.MapFrom(x => string.IsNullOrEmpty( x.AadhaarNumber) ? string.Empty : string.Format("XXXX XXXX {0}", x.AadhaarNumber.Trim().Substring(8, 4))))
+                .ForMember(dest => dest.ReportingTo, opt => opt.MapFrom(x => x.ReportingTo.Name));
+
+
+            CreateMap<TranSmart.Domain.Entities.Leave.ApplyLeave, TranSmart.Domain.Models.Organization.EmployeeAddModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(x => x.Employee.Name));
+
+            CreateMap<TranSmart.Domain.Entities.Leave.ApplyLeave, TranSmart.Domain.Models.Organization.EmployeeModel>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(x => x.Employee.Name));
+
+            CreateMap<TranSmart.Domain.Entities.Organization.Employee, TranSmart.Domain.Models.Organization.EmployeeInfoModel>()
+                .ForMember(d => d.Department, s => s.MapFrom(x => x.Department.Name))
+                .ForMember(d => d.Designation, s => s.MapFrom(x => x.Designation.Name))
+                .ForMember(d => d.EmployeeNo, s => s.MapFrom(x => x.No));
+
+
+            CreateMap<UserAudit, TranSmart.Domain.Models.UserAuditModel>()
+                .ForMember(d => d.DateOfUpdated, s => s.MapFrom(x => x.AddedAt))
+                .ForMember(d => d.UpdatedBy, s => s.MapFrom(x => x.CreatedBy));
+
+			CreateMap<RoleReportPrivilege, RoleReportPrivilegeCache>()
+			   .ForMember(d => d.CanView, s => s.MapFrom(x => x.Privilege))
+			   .ForMember(d => d.Name, s => s.MapFrom(x => x.Report.Name))
+			   .ForMember(d => d.Label, s => s.MapFrom(x => x.Report.Label))
+			   .ForMember(d => d.Module, s => s.MapFrom(x => x.Report.Module.Name))
+			   .ForMember(d => d.ModuleLabel, s => s.MapFrom(x => x.Report.Module.Label))
+			   .ForMember(d => d.ModuleId, s => s.MapFrom(x => x.Report.ModuleId));
+
+			CreateMap<Token, ApiKeyCache>()
+				.ForMember(dest => dest.Name, opt => opt.MapFrom(x => x.User.Name))
+				.ForMember(dest => dest.EmployeeId, opt => opt.MapFrom(x => x.User.EmployeeID))
+				.ForMember(dest => dest.RoleId, opt => opt.MapFrom(x => x.User.RoleId));
+
+
+			CreateMap<TranSmart.Domain.Models.ReplicationModel, Replication>();
+			CreateMap<Replication, TranSmart.Domain.Models.ReplicationModel>();
+		}
+    }
+}

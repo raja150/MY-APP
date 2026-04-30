@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.14" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="MockQueryable.Moq" Version="6.0.1" />
+    <PackageReference Include="Moq" Version="4.18.4" />
+    <PackageReference Include="NSubstitute" Version="5.0.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="3.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Transmart.API\TranSmart.API.csproj" />
+    <ProjectReference Include="..\Transmart.Core\TranSmart.Core.csproj" />
+    <ProjectReference Include="..\Transmart.Data\TranSmart.Data.csproj" />
+    <ProjectReference Include="..\Transmart.Domain\TranSmart.Domain.csproj" />
+    <ProjectReference Include="..\Transmart.Service\TranSmart.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Attributes\" />
+    <Folder Include="Core\Compare\" />
+    <Folder Include="Data.Repository\" />
+    <Folder Include="ValidatorTest\" />
+  </ItemGroup>
+
+</Project>

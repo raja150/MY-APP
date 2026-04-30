@@ -1,0 +1,591 @@
+import { faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { CheckBox, Input, RWDatePicker, RWDropdownList } from 'components/dynamicform/Controls'
+import Loading from 'components/Loader'
+import EmployeeSearch from 'domain/EmployeeSearch'
+import moment from 'moment'
+import queryString from 'query-string'
+import React, { Fragment, useEffect, useState } from 'react'
+import Loader from 'react-loaders'
+import { Button, Card, CardBody, Col, Label, Modal, ModalBody, ModalFooter, ModalHeader, Row } from 'reactstrap'
+import { default as LeaveService, default as LeaveTypeService } from 'services/Leave/LeaveType'
+import AttendanceService from 'services/LMAttendance/Attendance'
+import DepartmentService from 'services/Org/Department'
+import DesignationService from 'services/Org/Designation'
+import { LEAVE_TYPE_DropDown, Second_DropDown, TableComponent } from 'Site_constants'
+import * as Compare from 'utils/Compare'
+import * as dateUtil from 'utils/date'
+import Table from './Table'
+import AttendanceEmployeeDetails from 'services/List/AttendanceEmployeeDetails';
+import HeaderComponent from './Header'
+import { displayErrors } from 'utils/form';
+
+function Attendance(props) {
+
+    // let unChangeableColumns = useMemo(() => UnChangeableColumns, []);
+    const unChangeableColumns = [
+        {
+            Header: "Employee", sticky: 'left', accessor: "name",
+            Cell: ({ value, row }) => {
+                const currentRow = row.original
+                return (
+                    <AttendanceEmployeeDetails currentRow={currentRow} />
+                )
+            }
+        },
+        { Header: "Department", accessor: "department", },
+
+    ]
+
+    const [searchDates, setDates] = useState({ fromDate: '', toDate: '' });
+    const [changeTo, setChangeTo] = useState('');
+    const [leave, setLeave] = useState('');
+    const [unauthorized, setUnauthorized] = useState('');
+    const [empLeaves, setEmpLeaves] = useState('')
+    const [emp, setEmp] = useState(null);
+    const [state, setState] = useState({
+        columns: [], data: [], department: [], designation: [],
+        attendanceData: [], isLoading: true, pageLoading: true, pageSize: 10, pageIndex: 0, pages: 0, hasPrevious: false,
+        hasNext: false
+    })
+    const [isTableLoading, setIsTableLoading] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [leaveTypes, setLeaveTypes] = useState([])
+    const [selEmp, setSelEmp] = useState({})
+    const [department, setDepartment] = useState('');
+    const [designation, setDesignation] = useState('');
+
+    const [halfDayDW, setHalfDayDW] = useState([]);
+    const [halfDayType, setHalfDayLeave] = useState('');
+    const [isFirstHalfDay, setFirstHalfDay] = useState('');
+    const [attendanceDW, setAttendanceDW] = useState([]);
+
+    const [enableHalfDW, setEnableHalfDW] = useState(false);
+    const [enableLeaveDW, setEnableLeaveDW] = useState(false);
+    const [enableUnAuthorized, setEnableUnAuthorized] = useState(false);
+    const [lType, setLType] = useState(false);
+    const [PopUp, setPopUp] = useState(false);
+    useEffect(() => {
+        const fetchData = async () => {
+            let department = [], designation = [];
+            await DepartmentService.getDepSList().then((res) => {
+                department = res.data;
+            })
+            await DesignationService.getDesignationsList().then((res) => {
+                designation = res.data;
+            })
+            setState({ ...state, pageLoading: false, department: department, designation: designation })
+        }
+        fetchData();
+    }, [])
+
+    const toggle = (cell, attendance) => {
+        clearPopUpValues();
+        const emp = {
+            name: cell.row.original.name,
+            date: cell.column.Header,
+            value: cell.value,
+            attendanceID: attendance.attendanceID,
+            employeeId: cell.row.original.id,
+            attendanceDate: attendance.attendanceDate
+        }
+        setEmp(emp)
+        setModal(true)
+        setUnauthorized('')
+        setLeave('')
+        let ary = []
+        LEAVE_TYPE_DropDown.forEach(element => {
+            if (element.value != attendance.attendanceStatusID)
+                ary.push(element);
+        });
+        setAttendanceDW(ary);
+    };
+
+    const clearPopUpValues = () => {
+        setHalfDayDW([]);
+        setAttendanceDW([]);
+        setChangeTo('');
+        setHalfDayLeave('');
+        setFirstHalfDay('');
+        setLType(false);
+        setEnableHalfDW(false);
+        setHalfDayLeave('');
+        setEnableLeaveDW(false);
+
+    }
+
+    const handleValueChange = async (name, value, { selected }) => {
+        if (Compare.isEqual(name, 'changeTo')) {
+            setLType(selected.isLeaveDW);
+            setChangeTo(value);
+            setEnableUnAuthorized(selected.value == 20 ? true : false);
+            handleLeaveChange(selected.isLeaveDW);
+            setHalfDayDW([]);
+            setHalfDayLeave('');
+            setFirstHalfDay('');
+            if (selected.isHalfDay) {
+                setEnableHalfDW(true);
+                Second_DropDown.forEach(v => {
+                    if (v.value == selected.value) {
+                        setHalfDayDW(v.text)
+                    }
+                })
+            }
+            else {
+                setEnableHalfDW(false);
+            }
+        }
+        if (Compare.isEqual(name, 'halfDayType')) {
+            setHalfDayLeave(selected.value);
+            handleLeaveChange(lType ? true : selected.isLeaveDW);
+            setFirstHalfDay('');
+        }
+        if (Compare.isEqual(name, 'firstHalf')) {
+            setFirstHalfDay(value);
+        }
+        if (Compare.isEqual(name, 'leaveTypeId')) {
+            setLeave('')
+            if (value) {
+                await LeaveService.getEmpLeaves(emp.employeeId, value,emp.attendanceDate).then(res => {
+                    setEmpLeaves(res.data)
+                })
+                setLeave(value)
+            } else {
+                setLeave('')
+                setEmpLeaves('')
+            }
+        }
+        if (Compare.isEqual(name, 'unauthorized')) {
+            if (value) {
+                setUnauthorized(value)
+            } else {
+                setUnauthorized('')
+            }
+        }
+        if (Compare.isEqual(name, 'department')) {
+            setDepartment(value);
+        }
+        if (Compare.isEqual(name, 'designation')) {
+            setDesignation(value);
+        }
+        setDates({ ...searchDates, [name]: value })
+    }
+
+    const handleLeaveChange = async (value) => {
+        setEnableLeaveDW(value);
+        if (value) {
+            await LeaveTypeService.getPaidLeaveTypes().then(res => {
+                setLeaveTypes(res.data)
+            })
+        }
+        else {
+            setLeaveTypes([])
+            setLeave('')
+            setEmpLeaves('')
+        }
+    }
+    const attendanceStatus = (status) => {
+        switch (status) {
+            case 'Present':
+                return <div className='text-center font-weight-bold text-body'>P</div>;
+            case 'Late':
+                return <div className='text-center font-weight-bold text-body'>Late</div>;
+            case 'Absent':
+                return <div className='text-center font-weight-bold text-danger'>A</div>;
+            case 'Leave':
+                return <div className='text-center font-weight-bold text-success'>L</div>;
+            case 'Holiday':
+                return <div className='text-center font-weight-bold text-success'>H</div>;
+            case 'WFH':
+                return <div className='text-center font-weight-bold text-warning'>WFH</div>;
+            case 'WeekOff':
+                return <div className='text-center font-weight-bold text-primary'>W-Off</div>;
+            case 'Unautherized':
+                return <div className='text-center font-weight-bold text-info'>UA</div>;
+
+                
+            case 'HalfDayLeave\nHalfDayPresent':
+                return <div className='text-center font-weight-bold text-success'>HDL & HDP</div>
+            case 'HalfDayLeave\nHalfDayWFH':
+                return <div className='text-center font-weight-bold text-success'>HDL & HDW</div>
+            case 'HalfDayLeave\nHalfDayAbsent':
+                return <div className='text-center font-weight-bold text-success'>HDL & HDA</div>
+
+            case 'HalfDayPresent\nHalfDayLeave':
+                return <div className='text-center font-weight-bold text-body'>HDP & HDL</div>
+            case 'HalfDayPresent\nHalfDayWFH':
+                return <div className='text-center font-weight-bold text-body'>HDP & HDW</div>
+            case 'HalfDayPresent\nHalfDayAbsent':
+                return <div className='text-center font-weight-bold text-body'>HDP & HDA</div>
+
+            case 'HalfDayWFH\nHalfDayPresent':
+                return <div className='text-center font-weight-bold text-warning'>HDW & HDP</div>;
+            case 'HalfDayWFH\nHalfDayLeave':
+                return <div className='text-center font-weight-bold text-warning'>HDW & HDL</div>;
+            case 'HalfDayWFH\nHalfDayAbsent':
+                return <div className='text-center font-weight-bold text-warning'>HDW & HDA</div>;
+
+            case 'HalfDayAbsent\nHalfDayPresent':
+                return <div className='text-center font-weight-bold text-danger'>HDA & HDP</div>;
+            case 'HalfDayAbsent\nHalfDayWFH':
+                return <div className='text-center font-weight-bold text-danger'>HDA & HDW</div>;
+            case 'HalfDayAbsent\nHalfDayLeave':
+                return <div className='text-center font-weight-bold text-danger'>HDA & HDL</div>;
+            case 'HalfDayLeave\nWeekOff':
+                return <div className='text-center font-weight-bold text-primary'>HDL & W-Off</div>
+            case 'WeekOff\nHalfDayLeave':
+                return <div className='text-center font-weight-bold text-primary'>W-Off & HDL</div>
+        }
+    }
+    const noAttendance = (status) => {
+        if (status == 'Leave' || status == 'Holiday' || status == 'WeekOff' || status == 'Absent' || status == 'WFH') {
+            return null
+        }
+        else {
+            return status
+        }
+    }
+    const handleUpdate = async (values) => {
+        setIsTableLoading(true)
+        const data = {
+            attendanceID: emp.attendanceID,
+            employeeId: emp.employeeId,
+            attendanceDate: emp.attendanceDate,
+            attendanceStatus: changeTo,
+            leaveTypeId: leave,
+            unauthorized: unauthorized,
+            isHalfDay: enableHalfDW ? true : false,
+            isFirstOff: isFirstHalfDay == 1 ? true : false,
+            halfDayType: halfDayType == '' ? 0 : halfDayType,
+            isRemainingHalf: enableHalfDW,
+        }
+        await AttendanceService.UpdateAttendance(data).then(res => {
+            let obj = state.data.find(ele => (ele.id === res.data.employeeId && ele.attendanceID === res.data.attendanceID))
+            obj[emp?.date] = res.data.attendanceStatus;
+
+            const index = state.data.findIndex(ele => (ele.id === res.data.employeeId && ele.attendanceID === res.data.attendanceID))
+            state.data.splice(index, 1, obj);
+
+        }).catch(err => {
+            displayErrors(err)
+        })
+        setModal(false)
+        setIsTableLoading(false)
+        handleSearch()
+    }
+
+    const handleSearch = async () => {
+        setIsTableLoading(true);
+        setState({ ...state, columns: [], isLoading: false })
+        let changeableColumns = [], attendanceData = []
+        let hasNext = false, hasPrevious = false, pageIndex = 0, pageSize = 10, pages = 0
+        let dates = [],
+            currentDate = new Date(searchDates.fromDate),
+            addDays = function (days) {
+                let date = new Date(this.valueOf());
+                date.setDate(date.getDate() + days);
+                return date;
+            };
+        while (currentDate <= new Date(searchDates.toDate)) {
+            dates.push({
+                label1: moment(currentDate).format('MMM'),
+                label2: moment(currentDate).format('dd DD'),
+                month: currentDate.getMonth(), day: currentDate.getDate()
+            });
+            currentDate = addDays.call(currentDate, 1);
+        }
+        const qString = queryString.stringify({
+            page: 0,
+            size: state.pageSize,
+            fromDate: searchDates.fromDate,
+            toDate: searchDates.toDate,
+            empId: selEmp.id ? selEmp.id : '',
+            department: department ? department : '',
+            designation: designation ? designation : ''
+        });
+        await AttendanceService.getAttendanceData(qString).then(res => {
+            attendanceData = res.data
+            hasNext = res.data.hasNext
+            hasPrevious = res.data.hasPrevious
+            pages = res.data.pages
+            pageIndex = res.data.index
+            pages = res.data.pages
+            pageSize = res.data.size
+        }).catch(err => {
+            displayErrors(err)
+        })
+        dates.length > 0 && dates.map((date, i) => {
+            changeableColumns.push({
+                id: i,
+                Header: () => (<div className='text-center'>{date.label1}<br />{date.label2}</div>),
+                accessor: i.toString(),
+                width: 100,
+                disableSortBy: true,
+                Cell: (cell) => {
+                    const attendance = cell.row.original.attendance.filter((item) => {
+                        const dt = new Date(item.attendanceDate)
+                        if (dt.getDate() == date.day
+                            && dt.getMonth() == date.month) {
+                            return item;
+                        }
+                    });
+                    if (attendance.length > 0) {
+                        return <div className='text-primary text-center' style={{ fontSize: '10px' }} onClick={() => toggle(cell, attendance[0])}>
+                            <div>{attendanceStatus(attendance[0].attendanceStatus)} {attendance[0].leaveTypeId != null ? '-' + attendance[0].leaveTypeName : ''}</div>
+                            {noAttendance(attendance[0].attendanceStatus) == null ? '' :
+                                <div >
+                                    {
+                                        dateUtil.DisplayTableDateOrTime(attendance[0].inTime, true, true)
+                                    }<br />
+                                    {
+                                        dateUtil.DisplayTableDateOrTime(attendance[0].outTime, true, true)
+                                    }<br />
+                                    {
+                                        Math.floor(attendance[0].workTime / 60) + ':' + (attendance[0].workTime % 60)
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                    return <div className='text-primary text-center'>N/A</div>;
+                }
+            })
+        })
+
+        setState({
+            ...state, columns: unChangeableColumns.concat(changeableColumns),
+            pages: attendanceData.pages, data: attendanceData.items, pageIndex: pageIndex,
+            hasNext: hasNext, hasPrevious: hasPrevious, isLoading: false, pageSize: pageSize
+        })
+        setIsTableLoading(false)
+    }
+
+    const handleFilterSearch = async (page, pageSize, sortBy, isDesc) => {
+        const qString = queryString.stringify({
+            page: page || 0,
+            sortBy: sortBy || '',
+            isDescend: isDesc || false,
+            size: pageSize || 10,
+            fromDate: searchDates.fromDate,
+            toDate: searchDates.toDate,
+            empId: selEmp.id ? selEmp.id : '',
+            department: department,
+            designation: designation
+        });
+        await AttendanceService.getAttendanceData(qString).then((response) => {
+            const data = response.data.items;
+            data.length > 0 && data.map((item, i) => {
+                return item["action"] = <Button className="p-1 border-0 btn-transition" outline color="primary"><FontAwesomeIcon icon={faEdit} /></Button>
+            })
+            setState({
+                ...state, pages: response.data.pages, data: response.data.items, pageSize: pageSize || state.pageSize,
+                hasNext: response.data.hasNext, hasPrevious: response.data.hasPrevious, pageIndex: response.data.index
+            });
+        });
+    }
+    const handlePopUp = () => {
+        setPopUp(!PopUp)
+    }
+    return (
+        <Fragment>
+            <Card>
+                {state.pageLoading ? <Loading /> :
+                    <CardBody>
+                        <Row>
+                            <Col xs='4'>
+                                <RWDatePicker {...{
+                                    name: 'fromDate', label: 'From Date',
+                                    value: searchDates.fromDate, showDate: true, showTime: false, disabled: false,
+                                }} handlevaluechange={handleValueChange} />
+                            </Col>
+                            <Col xs='4'>
+                                <RWDatePicker {...{
+                                    name: 'toDate', label: 'To Date',
+                                    value: searchDates.toDate, showDate: true, showTime: false, disabled: false,
+                                }} handlevaluechange={handleValueChange} />
+                            </Col>
+                            <Col xs='4'>
+                                <Label htmlFor='employee'>Employee Name</Label>
+                                <EmployeeSearch name='employeeNo' disabled={false} setSelEmp={setSelEmp} selEmp={selEmp} handleValueChange={handleValueChange} />
+
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs='4'>
+                                <RWDropdownList {...{
+                                    name: 'department', label: 'Department', valueField: 'id', textField: 'name',
+                                    value: department, values: state.department
+                                }} handlevaluechange={handleValueChange}
+                                />
+                            </Col>
+                            <Col xs='4'>
+                                <RWDropdownList {...{
+                                    name: 'designation', label: 'Designation', valueField: 'id', textField: 'name',
+                                    value: designation, values: state.designation
+                                }} handlevaluechange={handleValueChange}
+                                />
+                            </Col>
+                            <Col xs='1' className='mt-auto'>
+                                <Button className="mb-1 mr-2 btn-icon btn-success" key='button' color="success"
+                                    disabled={(searchDates.fromDate == '' || searchDates.toDate == '') || isTableLoading ? true : false}
+                                    onClick={handleSearch}>{isTableLoading ? 'Please wait' : 'Search'}</Button>
+                            </Col>
+                            <Col xs='1'>
+                                <div className="btn-actions-pane-right" onClick={handlePopUp} style={{ marginRight: '350px', marginTop: '14px', padding: 5 }} >
+                                    <FontAwesomeIcon icon={faInfoCircle} size="2x" color='DeepSkyBlue' />
+                                </div>
+                            </Col>
+
+                        </Row>
+                        <Modal isOpen={modal}  >
+                            <ModalHeader cssModule={{ 'modal-title': 'w-100' }}>
+                                <HeaderComponent name={emp?.name} date={emp?.attendanceDate} />
+                            </ModalHeader>
+                            <ModalBody>
+                                <Row>
+                                    <Col md='4'>
+                                        <RWDropdownList {...{
+                                            name: 'changeTo', label: 'Change To',
+                                            textField: 'text', valueField: 'value',
+                                            value: changeTo, error: false, touched: false,
+                                            values: attendanceDW,
+                                        }} handlevaluechange={handleValueChange}
+                                        />
+                                    </Col>
+                                    {enableHalfDW ?
+                                        <>
+                                            <Col md='4'>
+                                                <RWDropdownList {...{
+                                                    name: 'halfDayType', label: 'Remaining Off',
+                                                    textField: 'text', valueField: 'value',
+                                                    value: halfDayType, error: false, touched: false,
+                                                    values: halfDayDW,
+                                                }} handlevaluechange={handleValueChange}
+                                                />
+                                            </Col>
+
+                                            <Col md='4'>
+                                                <CheckBox {...{
+                                                    name: 'firstHalf', label: '',
+                                                    value: isFirstHalfDay, error: false, touched: false,
+                                                    values: [{ value: 1, text: 'Is First Half' }],
+                                                }} handlevaluechange={handleValueChange}
+                                                />
+                                            </Col>
+
+                                        </> : ''}
+                                </Row>
+                                <Row>
+                                    {enableLeaveDW ?
+                                        <Col md='4'>
+                                            <RWDropdownList {...{
+                                                name: 'leaveTypeId', label: 'Leave Type', valueField: 'id', textField: 'code',
+                                                value: leave, values: leaveTypes, error: false, touched: false,
+                                            }} handlevaluechange={handleValueChange} />
+                                            <p>Total Leaves : <b>{empLeaves != '' ? empLeaves : '-'}</b></p>
+                                        </Col>
+                                        : ''}
+                                    {enableUnAuthorized ?
+                                        <Col md='4'>
+                                            <Input {...{
+                                                name: 'unauthorized', label: 'Unauthorized', type: 'number',
+                                                value: unauthorized, error: false, touched: false
+                                            }} handlevaluechange={handleValueChange} />
+                                        </Col>
+                                        : ''}
+                                </Row>
+
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="success" type='button' onClick={() => handleUpdate()} >Save Changes</Button>{' '}
+                                <Button color="secondary" onClick={() => setModal(!modal)}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
+
+                        <Modal isOpen={PopUp}>
+                            <ModalHeader cssModule={{ 'modal-title': 'w-100' }}>
+                                <div className="d-flex align-items-center justify-content-between">
+                                    <div style={{ marginLeft: '160px' }}>Abbrivations</div>
+                                </div>
+                            </ModalHeader>
+                            <ModalBody>
+                                <Row>
+                                    <Col md='6'>
+                                        <Row>
+                                            <Col xs='3'>P</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Present</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>A</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Absent</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>L</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Leave</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>W-Off</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Week Off</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>HDW</Col><Col md='1'> : </Col>
+                                            <Col xs='4'>Half Day WFH</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>HDA</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Half Day Absent</Col>
+                                        </Row>
+                                    </Col>
+                                    <Col md='6'>
+                                        <Row>
+                                            <Col xs='3'>WFH</Col><Col md='1'> : </Col>
+                                            <Col xs='5'>Work From Home</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>H</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Holiday</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>HDP</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Half Day Present</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>HDL</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Half Day Leave</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>UA</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Unauthorized</Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs='3'>Late</Col><Col md='1'> : </Col>
+                                            <Col xs='3'>Late</Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" style={{ marginRight: '225px' }} onClick={() => setPopUp(!PopUp)} >Ok</Button>
+                            </ModalFooter>
+                        </Modal>
+                    </CardBody>
+                }
+            </Card>
+            {
+                state.isLoading ? '' : isTableLoading ? <Loader type="line-scale-party" /> : <>
+                    <Table columns={state.columns}
+                        searchFromDates={searchDates.fromDate} searchToDates={searchDates.toDate}
+                        selEmp={selEmp.id ? selEmp.id : ''} department={department ? department : ''}
+                        designation={designation ? designation : ''}
+                        hasNext={state.hasNext} hasPrevious={state.hasPrevious}
+                        data={state.data} pages={state.pages}
+                        pageIndex={state.pageIndex}
+                        handleFilterSearch={handleFilterSearch} />
+                </>
+            }
+
+        </Fragment>
+    )
+}
+
+export default Attendance

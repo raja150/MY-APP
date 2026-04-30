@@ -1,0 +1,6 @@
+export const LEAVE_APPROVAL = '/m/approval/leave'
+export const LEAVE_CALENDAR = '/m/approval/Calender?'
+export const LM_APPROVAL = '/m/Leave/Leaves'
+export const MORE = '/m/Leave/ApproveLeave/More?'
+export const DETAILS = '/m/approval/Details?'
+export const MORE_DETAILS = '/m/Leave/ApproveLeave/Details?'

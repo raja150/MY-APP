@@ -1,0 +1,86 @@
+import GoBack from 'components/Button/GoBack';
+import moment from 'moment';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Card, CardBody, Col, Row } from 'reactstrap';
+import ApplyLeavesService from 'services/Leave/ApplyLeave';
+import { LM_APPROVAL } from '../../Approvals/navigation';
+import * as crypto from 'utils/Crypto';
+import queryString from 'query-string';
+import Loading from 'components/Loader';
+import * as _ from 'lodash'
+import { useHistory } from 'react-router-dom';
+import MyCalendar from './Calendar';
+import ApproveOrReject from './ApproveOrReject';
+import { notifySaved } from 'components/alert/Toast';
+import * as formUtil from 'utils/form';
+
+export default function LMDetails(props) {
+    const parsed = queryString.parse(props.location.search);
+    const date = parsed.r ? crypto.decrypt(parsed.r) : null;
+    const rid = parsed.s ? crypto.decrypt(parsed.s) : null;
+    const [state, setState] = useState({ isLoading: true, data: [], approveData: {}, weekLeaves: [], appliedLeaves: [], approvedLeaves: [] });
+    let history = useHistory()
+
+    useEffect(() => {
+        const fetchData = async () => {
+            let data = [], approveData = {}, weekLeaves = [], appliedLeaves = [], approvedLeaves = []
+            if (rid != null) {
+                await ApplyLeavesService.GetLeavesByMonth(moment(date).format('MM')).then((response) => {
+                    data = response.data
+                });
+
+                await ApplyLeavesService.getLeaveById(rid).then((res) => {
+                    approveData = res.data
+                })
+                await ApplyLeavesService.GetWeekLeaves(approveData.employeeId, approveData.fromDate, approveData.toDate).then((result) => {
+                    weekLeaves = result.data
+                    weekLeaves.forEach(function (item) {
+                        if (item.status == 1) {
+                            appliedLeaves.push(item)
+                        }
+                        else if (item.status === 2) {
+                            approvedLeaves.push(item)
+                        }
+                    })
+                })
+                setState({ isLoading: false, data: data, approveData: approveData, weekLeaves: weekLeaves, appliedLeaves: appliedLeaves, approvedLeaves: approvedLeaves })
+            }
+        }
+        fetchData();
+    }, []);
+
+    const handleSubmit = async (data, actions) => {
+        await ApplyLeavesService.approveOrReject(data).then((res) => {
+            notifySaved();
+            history.push(LM_APPROVAL)
+            props.handleSearch();
+        }).catch((error) => {
+            formUtil.displayFormikError(error, actions)
+        });
+    }
+    const getLeavesByDates = async (min, max) => {
+        var fromDate = moment(min).format(moment.HTML5_FMT.DATE)
+        var toDate = moment(max).format(moment.HTML5_FMT.DATE)
+        let data = []
+        await ApplyLeavesService.GetLeavesBetweenDates(fromDate, toDate).then((response) => {
+            data = response.data
+        });
+        setState({ ...state, data: data })
+    }
+    return (
+        <Fragment>
+            <Card>
+                {state.isLoading ? <Loading /> :
+                    <CardBody>
+                        <GoBack title={'Leave application'} link={LM_APPROVAL} />
+                        <ApproveOrReject data={state.approveData}
+                            applied={state.appliedLeaves}
+                            approved={state.approvedLeaves}
+                            handleSubmit={handleSubmit} />
+                        <MyCalendar data={state.data} month={moment(date).format('MMMM')} />
+                    </CardBody>
+                }
+            </Card>
+        </Fragment>
+    )
+}

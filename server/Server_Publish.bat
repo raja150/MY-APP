@@ -1,0 +1,1 @@
+C:\Windows\System32\inetsrv\appcmd stop site /site.name:HRIS_Server && xcopy D:\Projects_Code\HRIS\server\Build C:\inetpub\wwwroot\HRIS\Server /E /H /C /I && C:\Windows\System32\inetsrv\appcmd start site /site.name:HRIS_Server

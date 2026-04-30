@@ -1,0 +1,1043 @@
+// Linear Icons
+$linearicons-font-path: "linearicons";
+$hims-color: #28ace2;
+
+
+@font-face {
+  font-family: 'Linearicons-Free';
+  src:url('#{$linearicons-font-path}/Linearicons-Free.eot?w118d');
+  src:url('#{$linearicons-font-path}/Linearicons-Free.eot?#iefixw118d') format('embedded-opentype'),
+  url('#{$linearicons-font-path}/Linearicons-Free.woff2?w118d') format('woff2'),
+  url('#{$linearicons-font-path}/Linearicons-Free.woff?w118d') format('woff'),
+  url('#{$linearicons-font-path}/Linearicons-Free.ttf?w118d') format('truetype'),
+  url('#{$linearicons-font-path}/Linearicons-Free.svg?w118d#Linearicons-Free') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="lnr-"],
+[class*=" lnr-"] {
+  font-family: 'Linearicons-Free';
+  // speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lnr-home:before {
+  content: "\e800";
+}
+.lnr-apartment:before {
+  content: "\e801";
+}
+.lnr-pencil:before {
+  content: "\e802";
+}
+.lnr-magic-wand:before {
+  content: "\e803";
+}
+.lnr-drop:before {
+  content: "\e804";
+}
+.lnr-lighter:before {
+  content: "\e805";
+}
+.lnr-poop:before {
+  content: "\e806";
+}
+.lnr-sun:before {
+  content: "\e807";
+}
+.lnr-moon:before {
+  content: "\e808";
+}
+.lnr-cloud:before {
+  content: "\e809";
+}
+.lnr-cloud-upload:before {
+  content: "\e80a";
+}
+.lnr-cloud-download:before {
+  content: "\e80b";
+}
+.lnr-cloud-sync:before {
+  content: "\e80c";
+}
+.lnr-cloud-check:before {
+  content: "\e80d";
+}
+.lnr-database:before {
+  content: "\e80e";
+}
+.lnr-lock:before {
+  content: "\e80f";
+}
+.lnr-cog:before {
+  content: "\e810";
+}
+.lnr-trash:before {
+  content: "\e811";
+}
+.lnr-dice:before {
+  content: "\e812";
+}
+.lnr-heart:before {
+  content: "\e813";
+}
+.lnr-star:before {
+  content: "\e814";
+}
+.lnr-star-half:before {
+  content: "\e815";
+}
+.lnr-star-empty:before {
+  content: "\e816";
+}
+.lnr-flag:before {
+  content: "\e817";
+}
+.lnr-envelope:before {
+  content: "\e818";
+}
+.lnr-paperclip:before {
+  content: "\e819";
+}
+.lnr-inbox:before {
+  content: "\e81a";
+}
+.lnr-eye:before {
+  content: "\e81b";
+}
+.lnr-printer:before {
+  content: "\e81c";
+}
+.lnr-file-empty:before {
+  content: "\e81d";
+}
+.lnr-file-add:before {
+  content: "\e81e";
+}
+.lnr-enter:before {
+  content: "\e81f";
+}
+.lnr-exit:before {
+  content: "\e820";
+}
+.lnr-graduation-hat:before {
+  content: "\e821";
+}
+.lnr-license:before {
+  content: "\e822";
+}
+.lnr-music-note:before {
+  content: "\e823";
+}
+.lnr-film-play:before {
+  content: "\e824";
+}
+.lnr-camera-video:before {
+  content: "\e825";
+}
+.lnr-camera:before {
+  content: "\e826";
+}
+.lnr-picture:before {
+  content: "\e827";
+}
+.lnr-book:before {
+  content: "\e828";
+}
+.lnr-bookmark:before {
+  content: "\e829";
+}
+.lnr-user:before {
+  content: "\e82a";
+}
+.lnr-users:before {
+  content: "\e82b";
+}
+.lnr-shirt:before {
+  content: "\e82c";
+}
+.lnr-store:before {
+  content: "\e82d";
+}
+.lnr-cart:before {
+  content: "\e82e";
+}
+.lnr-tag:before {
+  content: "\e82f";
+}
+.lnr-phone-handset:before {
+  content: "\e830";
+}
+.lnr-phone:before {
+  content: "\e831";
+}
+.lnr-pushpin:before {
+  content: "\e832";
+}
+.lnr-map-marker:before {
+  content: "\e833";
+}
+.lnr-map:before {
+  content: "\e834";
+}
+.lnr-location:before {
+  content: "\e835";
+}
+.lnr-calendar-full:before {
+  content: "\e836";
+}
+.lnr-keyboard:before {
+  content: "\e837";
+}
+.lnr-spell-check:before {
+  content: "\e838";
+}
+.lnr-screen:before {
+  content: "\e839";
+}
+.lnr-smartphone:before {
+  content: "\e83a";
+}
+.lnr-tablet:before {
+  content: "\e83b";
+}
+.lnr-laptop:before {
+  content: "\e83c";
+}
+.lnr-laptop-phone:before {
+  content: "\e83d";
+}
+.lnr-power-switch:before {
+  content: "\e83e";
+}
+.lnr-bubble:before {
+  content: "\e83f";
+}
+.lnr-heart-pulse:before {
+  content: "\e840";
+}
+.lnr-construction:before {
+  content: "\e841";
+}
+.lnr-pie-chart:before {
+  content: "\e842";
+}
+.lnr-chart-bars:before {
+  content: "\e843";
+}
+.lnr-gift:before {
+  content: "\e844";
+}
+.lnr-diamond:before {
+  content: "\e845";
+}
+.lnr-linearicons:before {
+  content: "\e846";
+}
+.lnr-dinner:before {
+  content: "\e847";
+}
+.lnr-coffee-cup:before {
+  content: "\e848";
+}
+.lnr-leaf:before {
+  content: "\e849";
+}
+.lnr-paw:before {
+  content: "\e84a";
+}
+.lnr-rocket:before {
+  content: "\e84b";
+}
+.lnr-briefcase:before {
+  content: "\e84c";
+}
+.lnr-bus:before {
+  content: "\e84d";
+}
+.lnr-car:before {
+  content: "\e84e";
+}
+.lnr-train:before {
+  content: "\e84f";
+}
+.lnr-bicycle:before {
+  content: "\e850";
+}
+.lnr-wheelchair:before {
+  content: "\e851";
+}
+.lnr-select:before {
+  content: "\e852";
+}
+.lnr-earth:before {
+  content: "\e853";
+}
+.lnr-smile:before {
+  content: "\e854";
+}
+.lnr-sad:before {
+  content: "\e855";
+}
+.lnr-neutral:before {
+  content: "\e856";
+}
+.lnr-mustache:before {
+  content: "\e857";
+}
+.lnr-alarm:before {
+  content: "\e858";
+}
+.lnr-bullhorn:before {
+  content: "\e859";
+}
+.lnr-volume-high:before {
+  content: "\e85a";
+}
+.lnr-volume-medium:before {
+  content: "\e85b";
+}
+.lnr-volume-low:before {
+  content: "\e85c";
+}
+.lnr-volume:before {
+  content: "\e85d";
+}
+.lnr-mic:before {
+  content: "\e85e";
+}
+.lnr-hourglass:before {
+  content: "\e85f";
+}
+.lnr-undo:before {
+  content: "\e860";
+}
+.lnr-redo:before {
+  content: "\e861";
+}
+.lnr-sync:before {
+  content: "\e862";
+}
+.lnr-history:before {
+  content: "\e863";
+}
+.lnr-clock:before {
+  content: "\e864";
+}
+.lnr-download:before {
+  content: "\e865";
+}
+.lnr-upload:before {
+  content: "\e866";
+}
+.lnr-enter-down:before {
+  content: "\e867";
+}
+.lnr-exit-up:before {
+  content: "\e868";
+}
+.lnr-bug:before {
+  content: "\e869";
+}
+.lnr-code:before {
+  content: "\e86a";
+}
+.lnr-link:before {
+  content: "\e86b";
+}
+.lnr-unlink:before {
+  content: "\e86c";
+}
+.lnr-thumbs-up:before {
+  content: "\e86d";
+}
+.lnr-thumbs-down:before {
+  content: "\e86e";
+}
+.lnr-magnifier:before {
+  content: "\e86f";
+}
+.lnr-cross:before {
+  content: "\e870";
+}
+.lnr-menu:before {
+  content: "\e871";
+}
+.lnr-list:before {
+  content: "\e872";
+}
+.lnr-chevron-up:before {
+  content: "\e873";
+}
+.lnr-chevron-down:before {
+  content: "\e874";
+}
+.lnr-chevron-left:before {
+  content: "\e875";
+}
+.lnr-chevron-right:before {
+  content: "\e876";
+}
+.lnr-arrow-up:before {
+  content: "\e877";
+}
+.lnr-arrow-down:before {
+  content: "\e878";
+}
+.lnr-arrow-left:before {
+  content: "\e879";
+}
+.lnr-arrow-right:before {
+  content: "\e87a";
+}
+.lnr-move:before {
+  content: "\e87b";
+}
+.lnr-warning:before {
+  content: "\e87c";
+}
+.lnr-question-circle:before {
+  content: "\e87d";
+}
+.lnr-menu-circle:before {
+  content: "\e87e";
+}
+.lnr-checkmark-circle:before {
+  content: "\e87f";
+}
+.lnr-cross-circle:before {
+  content: "\e880";
+}
+.lnr-plus-circle:before {
+  content: "\e881";
+}
+.lnr-circle-minus:before {
+  content: "\e882";
+}
+.lnr-arrow-up-circle:before {
+  content: "\e883";
+}
+.lnr-arrow-down-circle:before {
+  content: "\e884";
+}
+.lnr-arrow-left-circle:before {
+  content: "\e885";
+}
+.lnr-arrow-right-circle:before {
+  content: "\e886";
+}
+.lnr-chevron-up-circle:before {
+  content: "\e887";
+}
+.lnr-chevron-down-circle:before {
+  content: "\e888";
+}
+.lnr-chevron-left-circle:before {
+  content: "\e889";
+}
+.lnr-chevron-right-circle:before {
+  content: "\e88a";
+}
+.lnr-crop:before {
+  content: "\e88b";
+}
+.lnr-frame-expand:before {
+  content: "\e88c";
+}
+.lnr-frame-contract:before {
+  content: "\e88d";
+}
+.lnr-layers:before {
+  content: "\e88e";
+}
+.lnr-funnel:before {
+  content: "\e88f";
+}
+.lnr-text-format:before {
+  content: "\e890";
+}
+.lnr-text-format-remove:before {
+  content: "\e891";
+}
+.lnr-text-size:before {
+  content: "\e892";
+}
+.lnr-bold:before {
+  content: "\e893";
+}
+.lnr-italic:before {
+  content: "\e894";
+}
+.lnr-underline:before {
+  content: "\e895";
+}
+.lnr-strikethrough:before {
+  content: "\e896";
+}
+.lnr-highlight:before {
+  content: "\e897";
+}
+.lnr-text-align-left:before {
+  content: "\e898";
+}
+.lnr-text-align-center:before {
+  content: "\e899";
+}
+.lnr-text-align-right:before {
+  content: "\e89a";
+}
+.lnr-text-align-justify:before {
+  content: "\e89b";
+}
+.lnr-line-spacing:before {
+  content: "\e89c";
+}
+.lnr-indent-increase:before {
+  content: "\e89d";
+}
+.lnr-indent-decrease:before {
+  content: "\e89e";
+}
+.lnr-pilcrow:before {
+  content: "\e89f";
+}
+.lnr-direction-ltr:before {
+  content: "\e8a0";
+}
+.lnr-direction-rtl:before {
+  content: "\e8a1";
+}
+.lnr-page-break:before {
+  content: "\e8a2";
+}
+.lnr-sort-alpha-asc:before {
+  content: "\e8a3";
+}
+.lnr-sort-amount-asc:before {
+  content: "\e8a4";
+}
+.lnr-hand:before {
+  content: "\e8a5";
+}
+.lnr-pointer-up:before {
+  content: "\e8a6";
+}
+.lnr-pointer-right:before {
+  content: "\e8a7";
+}
+.lnr-pointer-down:before {
+  content: "\e8a8";
+}
+.lnr-pointer-left:before {
+  content: "\e8a9";
+}
+
+// HRIS
+@font-face {
+  font-family: 'hris';
+  src:  url('hrisicons/hris.eot?un4men');
+  src:  url('hrisicons/hris.eot?un4men#iefix') format('embedded-opentype'),
+    url('hrisicons/hris.ttf?un4men') format('truetype'),
+    url('hrisicons/hris.woff?un4men') format('woff'),
+    url('hrisicons/hris.svg?un4men#hris') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="HRIS_"], [class*=" HRIS_"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'hris' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.HRIS_Approvals:before {
+  content: "\e900"; 
+  color: $hims-color;
+}
+.HRIS_Approvals-Clients-Visit:before {
+  content: "\e901";
+  color: $hims-color;
+}
+.HRIS_Approvals-Compensatory-Work-Day:before {
+  content: "\e902";
+  color: $hims-color;
+}
+.HRIS_Approvals-Leave:before {
+  content: "\e903";
+  color: $hims-color;
+}
+.HRIS_Approvals-Tickets:before {
+  content: "\e904";
+  color: $hims-color;
+}
+.HRIS_Approvals-Work-From-Home:before {
+  content: "\e905";
+  color: $hims-color;
+}
+.HRIS_Helpdesk:before {
+  content: "\e906";
+  color: $hims-color;
+}
+.HRIS_Helpdesk-Department:before {
+  content: "\e907";
+  color: $hims-color;
+}
+.HRIS_Helpdesk-Group:before {
+  content: "\e908";
+  color: $hims-color;
+}
+.HRIS_Helpdesk-Help-Topic:before {
+  content: "\e909";
+  color: $hims-color;
+}
+.HRIS_Helpdesk-Ticket-Status:before {
+  content: "\e90a";
+  color: $hims-color;
+}
+.HRIS_Helpdesk-Tickets:before {
+  content: "\e90b";
+  color: $hims-color;
+}
+.HRIS_Leave-Management:before {
+  content: "\e90c";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Assign-Pre-Consumable-Leaves:before {
+  content: "\e90d";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Attendance:before {
+  content: "\e90e";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Holidays:before {
+  content: "\e90f";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Import:before {
+  content: "\e910";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Leave-Balance-Adjust:before {
+  content: "\e911";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Leave-Type:before {
+  content: "\e912";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Leaves:before {
+  content: "\e913";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Settings:before {
+  content: "\e914";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Shift:before {
+  content: "\e915";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-Week-Off-Setup:before {
+  content: "\e916";
+  color: $hims-color;
+}
+.HRIS_Leave-Management-WFH:before {
+  content: "\e917";
+  color: $hims-color;
+}
+.HRIS_Organization:before {
+  content: "\e918";
+  color: $hims-color;
+}
+.HRIS_Organization-Department:before {
+  content: "\e919";
+  color: $hims-color;
+}
+.HRIS_Organization-Designation:before {
+  content: "\e91a";
+  color: $hims-color;
+}
+.HRIS_Organization-Employee-Category:before {
+  content: "\e91b";
+  color: $hims-color;
+}
+.HRIS_Organization-Employee:before {
+  content: "\e91c";
+  color: $hims-color;
+}
+.HRIS_Organization-Locations:before {
+  content: "\e91d";
+  color: $hims-color;
+}
+.HRIS_Organization-Organization:before {
+  content: "\e91e";
+  color: $hims-color;
+}
+.HRIS_Organization-Probation-Period-Settings:before {
+  content: "\e91f";
+  color: $hims-color;
+}
+.HRIS_Organization-State:before {
+  content: "\e920";
+  color: $hims-color;
+}
+.HRIS_Organization-Team:before {
+  content: "\e921";
+  color: $hims-color;
+}
+.HRIS_Organization-Users:before {
+  content: "\e922";
+  color: $hims-color;
+}
+.HRIS_Organization-Work-Type:before {
+  content: "\e923";
+  color: $hims-color;
+}
+.HRIS_Payroll:before {
+  content: "\e924";
+  color: $hims-color;
+}
+.HRIS_Payroll-Arrears:before {
+  content: "\e925";
+  color: $hims-color;
+}
+.HRIS_Payroll-Bank:before {
+  content: "\e926";
+  color: $hims-color;
+}
+.HRIS_Payroll-Bonus:before {
+  content: "\e927";
+  color: $hims-color;
+}
+.HRIS_Payroll-Declaration:before {
+  content: "\e928";
+  color: $hims-color;
+}
+.HRIS_Payroll-Deduction-Component:before {
+  content: "\e929";
+  color: $hims-color;
+}
+.HRIS_Payroll-Earning-Component:before {
+  content: "\e92a";
+  color: $hims-color;
+}
+.HRIS_Payroll-Employee-Salary:before {
+  content: "\e92b";
+  color: $hims-color;
+}
+.HRIS_Payroll-Import:before {
+  content: "\e92c";
+  color: $hims-color;
+}
+.HRIS_Payroll-Incentive-and-Pay-cut:before {
+  content: "\e92d";
+  color: $hims-color;
+}
+.HRIS_Payroll-Income-Tax-Limit:before {
+  content: "\e92e";
+  color: $hims-color;
+}
+.HRIS_Payroll-Loans:before {
+  content: "\e92f";
+  color: $hims-color;
+}
+.HRIS_Payroll-Other-Sections:before {
+  content: "\e930";
+  color: $hims-color;
+}
+.HRIS_Payroll-Pay-Run:before {
+  content: "\e931";
+  color: $hims-color;
+}
+.HRIS_Payroll-Payment-Info:before {
+  content: "\e932";
+  color: $hims-color;
+}
+.HRIS_Payroll-Professional-Tax:before {
+  content: "\e933";
+  color: $hims-color;
+}
+.HRIS_Payroll-Section-80C:before {
+  content: "\e934";
+  color: $hims-color;
+}
+.HRIS_Payroll-Section-80D:before {
+  content: "\e935";
+  color: $hims-color;
+}
+.HRIS_Payroll-Settings:before {
+  content: "\e936";
+  color: $hims-color;
+}
+.HRIS_Payroll-Statutory-Components:before {
+  content: "\e937";
+  color: $hims-color;
+}
+.HRIS_Payroll-Templates:before {
+  content: "\e938";
+  color: $hims-color;
+}
+.HRIS_Reports:before {
+  content: "\e939";
+  color: $hims-color;
+}
+.HRIS_Self-Service:before {
+  content: "\e93a";
+  color: $hims-color;
+}
+.HRIS_Self-Service-Apply-Client-Visits:before {
+  content: "\e93b";
+  color: $hims-color;
+}
+.HRIS_Self-Service-Apply-Compensatory-Working-Day:before {
+  content: "\e93c";
+  color: $hims-color;
+}
+.HRIS_Self-Service-Apply-Leaves:before {
+  content: "\e93d";
+  color: $hims-color;
+}
+.HRIS_Self-Service-Apply-Work-From-Home:before {
+  content: "\e93e";
+  color: $hims-color;
+}
+.HRIS_Self-Service-Attendance:before {
+  content: "\e93f";
+  color: $hims-color;
+}
+.HRIS_Self-Service-IT-Declaration:before {
+  content: "\e940";
+  color: $hims-color;
+}
+.HRIS_Self-Service-Leave-Balance:before {
+  content: "\e941";
+  color: $hims-color;
+}
+.HRIS_Self-Service-Raise-a-Ticket:before {
+  content: "\e942";
+  color: $hims-color;
+}
+.HRIS_Self-Service-Salary-Details:before {
+  content: "\e943";
+  color: $hims-color;
+}
+.HRIS_Settings:before {
+  content: "\e944";
+  color: $hims-color;
+}
+.HRIS_Settings-Roles:before {
+  content: "\e945";
+  color: $hims-color;
+}
+.HRIS_Settings-User-Settings:before {
+  content: "\e946";
+  color: $hims-color;
+} 
+
+// Foremost-ramak
+@font-face {
+  font-family: 'Foremost-ramak';
+  src:
+    url('foremostramak/Foremost-ramak.ttf?em8mh1') format('truetype'),
+    url('foremostramak/Foremost-ramak.woff?em8mh1') format('woff'),
+    url('foremostramak/Foremost-ramak.svg?em8mh1#Foremost-ramak') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="Foremost"], [class*=" Foremost"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'Foremost-ramak' !important;
+  // speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.ForemostIcons_Outline-01ramak-:before {
+  content: "\e900";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-02ramak-:before {
+  content: "\e901";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-03ramak-:before {
+  content: "\e902";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-04ramak-:before {
+  content: "\e903";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-05ramak-:before {
+  content: "\e904";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-06ramak-:before {
+  content: "\e905";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-07ramak-:before {
+  content: "\e906";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-08ramak-:before {
+  content: "\e907";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-09ramak-:before {
+  content: "\e908";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-10ramak-:before {
+  content: "\e909";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-11ramak-:before {
+  content: "\e90a";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-12ramak-:before {
+  content: "\e90b";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-13ramak-:before {
+  content: "\e90c";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-14ramak-:before {
+  content: "\e90d";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-15ramak-:before {
+  content: "\e90e";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-16ramak-:before {
+  content: "\e90f";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-17ramak-:before {
+  content: "\e910";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-18ramak-:before {
+  content: "\e911";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-19ramak-:before {
+  content: "\e912";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-20ramak-:before {
+  content: "\e913";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-21ramak-:before {
+  content: "\e914";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-22ramak-:before {
+  content: "\e915";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-23ramak-:before {
+  content: "\e916";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-24ramak-:before {
+  content: "\e917";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-25ramak-:before {
+  content: "\e918";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-26ramak-:before {
+  content: "\e919";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-27ramak-:before {
+  content: "\e91a";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-28ramak-:before {
+  content: "\e91b";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-29ramak-:before {
+  content: "\e91c";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-30ramak-:before {
+  content: "\e91d";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-31ramak-:before {
+  content: "\e91e";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-32ramak-:before {
+  content: "\e91f";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-33ramak-:before {
+  content: "\e920";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-34ramak-:before {
+  content: "\e921";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-35ramak-:before {
+  content: "\e922";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-36ramak-:before {
+  content: "\e923";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-37ramak-:before {
+  content: "\e924";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-38ramak-:before {
+  content: "\e925";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-39ramak-:before {
+  content: "\e926";
+  color: #2aa9de
+}
+.ForemostIcons_Outline-40ramak-:before {
+  content: "\e927";
+  color: #2aa9de
+}

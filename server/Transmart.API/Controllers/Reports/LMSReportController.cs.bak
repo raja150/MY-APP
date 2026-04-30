@@ -1,0 +1,198 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
+using TranSmart.API.Extensions;
+using TranSmart.Service.Reports;
+using TranSmart.Service.Reports.LMS;
+using TranSmart.Core.Result;
+using TranSmart.Domain.Entities.Organization;
+using TranSmart.Domain.Entities.Leave;
+using TranSmart.Domain.Reports;
+
+namespace TranSmart.API.Controllers.Reports
+{
+	[Route("api/[controller]")]
+	[ApiController]
+	public class LmsReportController : BaseController
+	{
+		private readonly ILmsReportService _service;
+		private readonly ILmsService _LMSservice;
+		public LmsReportController(ILmsReportService service, ILmsService LMSservice)
+		{
+			_service = service;
+			_LMSservice = LMSservice;
+		}
+		[HttpGet("AllActiveEmployees")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_ActiveEmployees)]
+		public async Task<IActionResult> AllActiveEmplyees([FromQuery] ActiveEmployeeRptModel model)
+		{
+			var result = new Result<Employee>();
+			if ((model.DepartmentId.HasValue || model.DesignationId.HasValue || model.TeamId.HasValue || model.EmployeeId.HasValue) &&
+				(model.FromDate.HasValue || model.ToDate.HasValue || model.DateOfBirth.HasValue))
+			{
+				return Ok(await _service.AllActiveEmployees(model));
+
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Department, Designation, Team , Employee, and Joining Date From or Joining Date To or Date Of Birth"));
+			return BadRequest(result);
+		}
+
+		[HttpGet("Attendance")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_Attendance)]
+		public async Task<IActionResult> Attendances(Guid? departmentId, Guid? designationId, Guid? teamId, Guid? employeeId, DateTime? fromDate, DateTime? toDate)
+		{
+			var result = new Result<TranSmart.Domain.Entities.Leave.Attendance>();
+			if ((departmentId.HasValue || designationId.HasValue || teamId.HasValue || employeeId.HasValue) &&
+				(fromDate.HasValue || toDate.HasValue))
+			{
+				return Ok(await _service.Attendances(departmentId, designationId, teamId, employeeId, fromDate, toDate));
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Department, Designation, Team , Employee, and Attendance From Date or Attendance To Date"));
+			return BadRequest(result);
+
+		}
+
+		[HttpGet("AllEmployeeContactDetails")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_ContactDetails)]
+		public async Task<IActionResult> AllEmployeeContactDetails(Guid? departmentId, Guid? designationId, Guid? teamId, Guid? employeeId, DateTime? fromDate, DateTime? toDate)
+		{
+			var result = new Result<EmployeeFamily>();
+			if ((departmentId.HasValue || designationId.HasValue || teamId.HasValue || employeeId.HasValue) &&
+				(fromDate.HasValue || toDate.HasValue))
+			{
+				return Ok(await _service.AllEmployeeContactDetails(departmentId, designationId, teamId, employeeId, fromDate, toDate));
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Department, Designation, Team , Employee, and Joining Date From or Joining Date To"));
+			return BadRequest(result);
+
+		}
+
+		[HttpGet("EmployeeActiveAddress")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_EmployeeAddress)]
+		public async Task<IActionResult> EmployeeAddress(Guid? departmentId, Guid? designationId, Guid? teamId, Guid? employeeId, DateTime? joinDateFrom, DateTime? joinDateTo, int? type)
+		{
+			var result = new Result<EmployeeEmergencyAd>();
+			if (((!departmentId.HasValue && !designationId.HasValue && !teamId.HasValue && !employeeId.HasValue) ||
+				(!joinDateFrom.HasValue && !joinDateTo.HasValue)) || !type.HasValue)
+			{
+				result.AddMessageItem(new MessageItem("Select anyone from Department, Designation, Team , Employee, and Joining Date From or Joining Date To"));
+				return BadRequest(result);
+			}
+			if (type == 1)
+			{
+				return Ok(await _service.EmployeePresentAddress(departmentId, designationId, teamId, employeeId, joinDateFrom, joinDateTo, type));
+			}
+			else if (type == 2)
+			{
+				return Ok(await _service.EmployeePermanentAddress(departmentId, designationId, teamId, employeeId, joinDateFrom, joinDateTo, type));
+			}
+			else if (type == 3)
+			{
+				return Ok(await _service.EmployeeEmergencyAddress(departmentId, designationId, teamId, employeeId, joinDateFrom, joinDateTo, type));
+			}
+
+
+			return null;
+		}
+
+		[HttpGet("LeaveBalance")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_LeaveBalances)]
+		public async Task<IActionResult> LeaveBalance(Guid? departmentId, Guid? designationId, Guid? teamId, Guid? employeeId, Guid? leaveTypeId)
+		{
+			var result = new Result<LeaveBalance>();
+			if (departmentId.HasValue || designationId.HasValue || teamId.HasValue || employeeId.HasValue || leaveTypeId.HasValue)
+			{
+				return Ok(await _LMSservice.LeaveBalances(departmentId, designationId, teamId, employeeId, leaveTypeId));
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Department, Designation, Team , Employee, or Leave Type"));
+			return BadRequest(result);
+		}
+		[HttpGet("MyTeamAttendance")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_MyTeamAttendance)]
+		public async Task<IActionResult> MyTeamAttendance(Guid? designationId, Guid? employeeId, DateTime? fromDate, DateTime? toDate, int? attendanceStatus)
+		{
+			var result = new Result<TranSmart.Domain.Entities.Leave.Attendance>();
+			if ((designationId.HasValue || employeeId.HasValue) &&
+				(fromDate.HasValue || toDate.HasValue))
+			{
+				return Ok(await _service.MyTeamAttendance(designationId, employeeId, fromDate, toDate, attendanceStatus, LOGIN_USER_EMPId));
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Designation, Employee, and Attendance From Date or Attendance To Date"));
+			return BadRequest(result);
+
+		}
+
+		[HttpGet("MyDepartmentAttendance")]
+		public async Task<IActionResult> MyDepartmentAttendance(Guid? designationId, Guid? employeeId, DateTime? fromDate, DateTime? toDate, int? attendanceStatus)
+		{
+			var result = new Result<TranSmart.Domain.Entities.Leave.Attendance>();
+			return Ok(await _service.MyDepartmentAttendance(designationId, employeeId, fromDate, toDate, attendanceStatus, LOGIN_USER_DEPTID));
+		}
+
+		[HttpGet("MyTeamLeaveBalances")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_MyTeamLeaveBalance)]
+		public async Task<IActionResult> MyTeamLeaveBalances(Guid? designationId, Guid? employeeId, Guid? leaveTypeId)
+		{
+			var result = new Result<LeaveBalance>();
+			if (designationId.HasValue || employeeId.HasValue || leaveTypeId.HasValue)
+			{
+				return Ok(await _service.MyTeamLeaveBalances(designationId, employeeId, leaveTypeId, LOGIN_USER_EMPId));
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Designation, Employee, or Leave Type"));
+			return BadRequest(result);
+		}
+		[HttpGet("ResignedEmployees")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_ResignedEmployees)]
+		public async Task<IActionResult> ResignedEmployees(Guid? departmentId, Guid? designationId, Guid? teamId, Guid? employeeId, DateTime? fromDate, DateTime? toDate)
+		{
+			var result = new Result<Employee>();
+			if ((departmentId.HasValue || designationId.HasValue || teamId.HasValue || employeeId.HasValue) &&
+				(fromDate.HasValue || toDate.HasValue))
+			{
+				return Ok(await _service.ResignedEmployees(departmentId, designationId, teamId, employeeId, fromDate, toDate));
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Department, Designation, Team , Employee, and Resigned From Date or Resigned To Date"));
+			return BadRequest(result);
+
+		}
+
+		[HttpGet("WeekOffSetup")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_EmployeeWeekOff)]
+		public async Task<IActionResult> WeekOffSetup(Guid? departmentId, Guid? designationId, Guid? teamId, Guid? employeeId, Guid? weekOffId)
+		{
+			Result<WeekOffSetup> result = new Result<WeekOffSetup>();
+			if (departmentId.HasValue || designationId.HasValue || teamId.HasValue || employeeId.HasValue || weekOffId.HasValue)
+			{
+				return Ok(await _service.WeekOffReport(departmentId, designationId, teamId, employeeId, weekOffId));
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Department, Designation, Team , Employee, or Week Off"));
+			return BadRequest(result);
+
+		}
+		[HttpGet("Shift")]
+		[ApiReportAuthorize(Core.ReportPermission.LMS_EmployeeShift)]
+		public async Task<IActionResult> Shift(Guid? departmentId, Guid? designationId, Guid? teamId, Guid? employeeId, Guid? shiftId)
+		{
+			Result<Shift> result = new Result<Shift>();
+			if (departmentId.HasValue || designationId.HasValue || teamId.HasValue || employeeId.HasValue || shiftId.HasValue)
+			{
+				return Ok(await _service.ShiftReport(departmentId, designationId, teamId, employeeId, shiftId));
+			}
+			result.AddMessageItem(new MessageItem("Select anyone from Department, Designation, Team , Employee, or Shift"));
+			return BadRequest(result);
+		}
+
+		[HttpGet("SelfAttendance")]
+		[ApiAuthorize(Core.Permission.SS_Attendance, Core.Privilege.Read)]
+		public async Task<IActionResult> SelfAttendance(DateTime? fromDate, DateTime? toDate, int? attendanceStatus)
+		{
+			Result<TranSmart.Domain.Entities.Leave.Attendance> result = new Result<TranSmart.Domain.Entities.Leave.Attendance>();
+			if (!fromDate.HasValue && !toDate.HasValue && attendanceStatus == null)
+			{
+				result.AddMessageItem(new MessageItem("From Date, To Date and Status are required"));
+				return BadRequest(result);
+			}
+			return Ok(await _service.SelfAttendance(fromDate, toDate, attendanceStatus, LOGIN_USER_EMPId));
+		}
+	}
+}

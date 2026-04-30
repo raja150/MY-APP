@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000" />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>IHMS - Avontix %REACT_APP_API_ENV%</title>
+    <script>
+        window.PUBLIC_URL = "%PUBLIC_URL%"
+    </script>
+
+    <style>
+        body {
+            font-family: Poppins, Helvetica, "sans-serif" !important;
+            font-size: 13px !important;
+        }
+
+        .form-control {
+            border-color: #E4E6EF;
+        }
+
+        .dropdown-menu {
+            z-index: 9999 !important;
+        }
+        .list-group-item + .list-group-item {
+    border-top-width: 1px !important;
+}
+
+        .form-control-sm .rw-widget-picker {
+            height: 31px !important;
+            display: block !important;
+        }
+
+        .form-control .rw-widget-picker {
+            height: 31px !important;
+        }
+
+        .form-control-sm .rw-multiselect-tag {
+            margin-top: 2px;
+        }
+
+        .form-control-sm .rw-multiselect-taglist {
+            vertical-align: super;
+        }
+
+        .form-control-sm .rw-dropdown-list-input {
+            padding-top: 4px;
+        }
+
+
+        .btn-xs.btn {
+            padding: 0.25rem 0.4rem;
+            font-size: 0.675rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+            border: none;
+        }
+
+        .loader-undefined {
+            align-items: center;
+            display: flex;
+            height: 70vh;
+            width: fit-content;
+            margin: 0px auto;
+        }
+
+        .loader-small {
+            height: auto;
+        }
+
+        .bg-light-gray {
+            background-color: #f7f7f7 !important;
+        }
+
+        .border-lighter {
+            border: 1px solid #f5f5f5;
+        }
+
+        :focus {
+            outline: -webkit-focus-ring-color auto 0px !important;
+        }
+
+        .app-main .app-main__inner {
+            padding: 15px 15px 0px !important;
+        }
+
+        .app-page-title {
+            margin: -15px -15px 15px !important;
+        }
+
+        .p-fixed {
+            position: fixed;
+        }
+
+        .ReactTable .rt-thead.-header {
+            box-shadow: none !important;
+            background-color: #e4e4e4;
+        }
+
+        .ReactTable .rt-thead .rt-resizable-header-content {
+            font-weight: 600;
+        }
+
+        .ReactTable .rt-thead .rt-th,
+        .ReactTable .rt-thead .rt-td {
+            color: #6c757d !important;
+        }
+
+        .modal-header {
+            padding: 0.5rem 1rem !important;
+        }
+
+        .closed-sidebar .app-sidebar .app-sidebar__inner {
+            padding: 2px 0.5rem 1.5rem !important;
+        }
+
+        .collapsible {
+            display: none;
+        }
+
+        .collapsible.open {
+            display: block;
+        }
+
+        .button-new .btn-primary,
+        .button-new .btn-primary:hover {
+            color: #000;
+            background-color: transparent !important;
+            border-color: #2bace2;
+        }
+
+        .button-new button {
+            padding-bottom: 0.25rem !important;
+            padding-top: 0.25rem !important;
+        }
+
+        .button-new .btn-primary .badge-light {
+            background-color: #2bace2;
+            color: #fff;
+        }
+
+        .button-new .btn-success,
+        .button-new .btn-success:hover {
+            color: #000;
+            background-color: transparent;
+            border-color: #2fa84f;
+        }
+
+        .button-new .btn-success .badge-light {
+            background-color: #2fa84f;
+            color: #fff;
+        }
+
+        .button-new .btn-danger,
+        .button-new .btn-danger:hover {
+            text-decoration: line-through;
+            color: #000;
+            background-color: transparent;
+            border-color: #ea3d2f;
+        }
+        .rc-tabs-top .rc-tabs-tab-prev-icon:before {
+    content: "<";
+    background-color: #71b546;
+    color: #fff;
+    padding: 0px 6px;
+}
+.rc-tabs-top .rc-tabs-tab-next-icon:before{
+    background-color: #71b546;
+    color: #fff;
+    padding: 0px 6px;}
+
+        .button-new .btn-danger .badge-light {
+            background-color: #ea3d2f;
+            color: #fff;
+        }
+
+        .button-new .btn-warning,
+        .button-new .btn-warning:hover {
+            color: #000;
+            background-color: transparent;
+            border-color: #f3aa18;
+        }
+
+        .button-new .btn-warning .badge-light {
+            background-color: #f3aa18;
+            color: #fff;
+        }
+
+        .button-new .btn-secondary,
+        .button-new .btn-secondary:hover {
+            color: #000;
+            background-color: transparent;
+            border-color: #6c757d;
+        }
+
+        .button-new .btn-secondary .badge-light {
+            background-color: #6c757d;
+            color: #fff;
+        }
+
+        .button-new .btn-focus,
+        .button-new .btn-focus:hover {
+            color: #444054;
+            background-color: transparent;
+            border-color: #444054;
+        }
+
+        .button-new .btn-focus .badge-light {
+            background-color: #444054;
+            color: #fff;
+        }
+
+        .button-new .btn-info,
+        .button-new .btn-info:hover {
+            color: #367bf5;
+            background-color: #e5efff;
+            border-color: #e5efff;
+            box-shadow: none !important;
+        }
+
+        .react-confirm-alert-body {
+            border-radius: 2px;
+        }
+
+        .react-confirm-alert-body>h1 {
+            color: #495057;
+            text-align: center;
+            text-transform: none;
+            position: relative;
+            margin: 0.75rem 0;
+            padding: 0;
+            display: block;
+            text-transform: capitalize;
+            font-size: 1.5rem;
+        }
+
+        .react-confirm-alert-body {
+            color: #adb5bd !important;
+            text-align: center !important;
+            width: 100% !important;
+        }
+
+        .react-confirm-alert-button-group {
+            justify-content: center !important;
+        }
+
+        .react-confirm-alert-overlay {
+            background: rgba(0, 0, 0, 0.5) !important;
+        }
+
+        .react-confirm-alert-button-group>button {
+            background: #2e38cb !important;
+        }
+
+        .w-15 {
+            width: 15%;
+        }
+
+        .w-20 {
+            width: 20%;
+        }
+
+        .table th,
+        .table-bordered td {
+            padding: 0.3rem 0.3rem !important;
+        }
+
+        .table thead tr th label{
+            font-weight: 600;
+        }
+
+        .w-15 input {
+            height: calc(1.5em + 0.5rem + 2px);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+        }
+
+        .fs-25 {
+            font-size: 21px;
+            font-weight: 600 !important;
+            margin-right: 4px;
+        }
+
+        .fs-25::before {
+            color: #fdb913 !important;
+        }
+
+        .valight {
+            vertical-align: text-top;
+            padding-right: 0.25rem;
+        }
+
+        .slick-arrow {
+            display: none !important;
+        }
+
+        .valigntop {
+            vertical-align: top;
+        }
+
+        .metismenu-container {
+            margin-top: 10px !important;
+        }
+
+        select option:hover {
+            background-color: #2fa84f !important;
+        }
+
+        .rt-column .col-sm-2,
+        .rt-column .col-sm-1 {
+            border: 1px solid #e9ecef;
+            padding: 6px 10px;
+        }
+
+        .rt-column {
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .fs-12 {
+            font-size: 12px;
+            font-weight: 600 !important;
+            margin-right: 3px;
+        }
+
+        .fs-12::before {
+            color: #000 !important;
+        }
+
+        .rbc-toolbar button {
+            background: #2BACE2 !important;
+            border: 1px solid #2BACE2 !important;
+            font-weight: normal !important;
+        }
+
+        .rbc-toolbar button:active,
+        .rbc-toolbar button.rbc-active {
+            background-image: none;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            background-color: #545b62 !important;
+            border-color: #545b62 !important;
+        }
+
+        .btn-primary1 {
+            color: #fff;
+            background-color: #2BACE2 !important;
+            border-color: #2BACE2 !important;
+            font-weight: 400;
+        }
+
+        .btn-focus1 {
+            color: #28ace2 !important;
+            background-color: #ffffff !important;
+            border-color: #28ace2 !important;
+        }
+
+        .vertical-nav-menu .metismenu-container .metismenu-container.visible>.metismenu-item>.metismenu-link {
+            font-weight: 400;
+        }
+
+        .vertical-nav-menu .metismenu-container .metismenu-container.visible>.metismenu-item>.metismenu-link.active {
+            color: #2aa9de !important;
+        }
+
+        .vertical-nav-menu .metismenu-container .metismenu-container.visible>.metismenu-item>.metismenu-link:hover {
+            color: #2aa9de !important;
+        }
+
+        .vertical-nav-menu .metismenu-container .metismenu-link.active {
+            color: #2aa9de !important;
+            font-weight: 400 !important;
+        }
+
+        .btn-success1 {
+            color: #fff !important;
+            background-color: #73B443 !important;
+            border-color: #73B443 !important;
+        }
+
+        .dropdown-menu.dropdown-menu-lg {
+            min-width: 15rem !important;
+            transform:translate3d(-35px, 20px, 0px) !important;
+        }
+
+        .ball-grid-pulse>div {
+            visibility: hidden;
+        }
+
+        .ball-grid-beat>div {
+            visibility: hidden;
+        }
+
+        .ball-grid-pulse {
+            background: url('../preloader57.gif');
+            background-repeat: no-repeat;
+        }
+
+        .pmd-textfield-filled-wrapper .form-control:focus {
+            border-color: transparent;
+            box-shadow: none;
+        }
+
+        .pmd-textfield.pmd-textfield-filled .pmd-textfield-filled-wrapper {
+            background-color: transparent !important;
+        }
+
+
+
+        @media (max-width: 320px) {
+            .rbc-btn-group {
+                display: inline-block;
+                white-space: normal !important;
+            }
+
+            .table-bordered {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+         @media (min-width: 768px) {
+            
+            .table-responsive-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+}
+            .rc-tabs-tab-prev-icon, .rc-tabs-tab-next-icon {
+    margin-top: 23px;
+}
+.table thead tr th label {
+    font-weight: 600;
+    font-size: 12px;
+}
+            .btn-primary {
+    color: #fff;
+    background-color: #28ace2 !important;
+    border-color: #28ace2 !important;
+}
+            .text-center-xs .btn-secondary {
+                margin-top: 25px !important;
+            }
+
+            .text-center-xs .float-left .btn-secondary {
+                margin-top: 0px !important;
+            }
+         }
+
+        @media (max-width: 991.98px){
+            .app-page-title {
+                text-align: left !important;
+            }
+            .app-header .app-header__menu { visibility: hidden; }
+.app-header .app-header__content.header-mobile-open { top:0px !important; }
+.app-header .app-header__content { box-shadow: none !important;
+    background-color: #ddd0 !important; width: 100px !important; right: 5% !important; visibility: visible !important;
+    opacity: 1 !important; left: inherit !important;  }
+.header-btn-lg::before { width:0px !important; }
+
+
+.app-header .app-header__content.header-mobile-open { visibility: visible !important;
+    opacity: 1 !Important; }
+          }
+
+        /* new css for new ui */
+        .btn.btn-white {
+            color: #3F4254;
+            background-color: #ffffff;
+            border-color: #ffffff;
+            font-weight: 500;
+        }
+
+        /* .app-theme-white .app-page-title {
+            background: #f3f6f9 !important;
+        } */
+
+        .btn.btn-hover-primary:hover:not(.btn-text):not(:disabled):not(.disabled),
+        .btn.btn-hover-primary:focus:not(.btn-text),
+        .btn.btn-hover-primary.focus:not(.btn-text) {
+            color: #FFFFFF !important;
+            background-color: #28ace2 !important;
+            border-color: #28ace2 !important;
+        }
+
+        .svg-icon.svg-icon-success svg g [fill] {
+            -webkit-transition: fill 0.3s ease;
+            transition: fill 0.3s ease;
+            fill: #28ace2 !important;
+
+        }
+
+        .svg-icon.svg-icon-primary svg g [fill] {
+            -webkit-transition: fill 0.3s ease;
+            transition: fill 0.3s ease;
+            fill: #3699FF !important;
+        }
+
+        .btn.btn-hover-primary:hover:not(.btn-text):not(:disabled):not(.disabled) .svg-icon svg g [fill],
+        .btn.btn-hover-primary:focus:not(.btn-text) .svg-icon svg g [fill],
+        .btn.btn-hover-primary.focus:not(.btn-text) .svg-icon svg g [fill] {
+            -webkit-transition: fill 0.3s ease;
+            transition: fill 0.3s ease;
+            fill: #FFFFFF !important;
+        }
+
+        .text-muted {
+            color: #B5B5C3 !important;
+        }
+
+        .input-icon span {
+            right: 0;
+            top: 0;
+            bottom: 0;
+            position: absolute;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            width: calc(1.5em + 1.3rem + 2px);
+            cursor: pointer;
+        }
+
+        .form-control.form-control-solid {
+            background-color: #F3F6F9;
+            border-color: #F3F6F9;
+            color: #3F4254;
+            -webkit-transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, -webkit-box-shadow 0.15s ease;
+            transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, -webkit-box-shadow 0.15s ease;
+            transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, -webkit-box-shadow 0.15s ease;
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon .form-control {
+            padding-left: 1rem;
+            font-size: 14px;
+        }
+
+        .input-icon i {
+            font-size: 1.25rem;
+        }
+
+        .form-control.form-control-solid:active,
+        .form-control.form-control-solid.active,
+        .form-control.form-control-solid:focus,
+        .form-control.form-control-solid:focus {
+            background-color: #EBEDF3;
+            border-color: #EBEDF3;
+            box-shadow: none;
+            color: #3F4254;
+            -webkit-transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, -webkit-box-shadow 0.15s ease;
+            transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, -webkit-box-shadow 0.15s ease;
+            transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, -webkit-box-shadow 0.15s ease;
+        }
+
+        .form-control {
+            border-color: #E4E6EF;
+        }
+
+        .rw-widget-input,
+        .rw-filter-input {
+            box-shadow: none !important;
+        }
+
+        .app-page-title .page-title-heading {
+            color: #181C32;
+        }
+
+        .vertical-nav-menu .metismenu-container .metismenu-link.has-active-child,
+        .vertical-nav-menu .metismenu-container .metismenu-link.active {
+            font-weight: 600 !important;
+        }
+
+        .ReactTable .rt-thead .rt-tr {
+            text-align: left !important;
+        }
+
+        .ReactTable .rt-thead .rt-th.-cursor-pointer,
+        .ReactTable .rt-thead .rt-td.-cursor-pointer {
+            cursor: pointer;
+            font-weight: 600;
+            color: #181C32 !important;
+            text-transform: uppercase;
+            padding: 0.3rem 0.75rem;
+        }
+        .ReactTable .rt-thead .rt-resizable-header-content{
+            font-size: 12px;
+        }
+        .ReactTable .rt-thead.-header {
+            box-shadow: none !important;
+            background-color: #e4e4e400;
+        }
+
+        .ReactTable .rt-thead .rt-th,
+        .ReactTable .rt-thead .rt-td {
+            border-right: 1px solid rgb(0 0 0 / 0%) !important;
+        }
+
+        .ReactTable {
+            border: 1px solid rgb(233 236 239) !important;
+        }
+
+        .bg-white {
+            background-color: #ffffff !important;
+        }
+
+        .font-14 {
+            font-size: 14px;
+        }
+        .sticky-toolbar {
+    width: 60px;
+    position: fixed;
+    top: 30%;
+    right: 0;
+    list-style: none;
+    margin: 0;
+    z-index: 50;
+    background: #ffffff;
+    -webkit-box-shadow: 0px 0px 50px 0px rgba(82, 63, 105, 0.15);
+    box-shadow: 0px 0px 50px 0px rgba(82, 63, 105, 0.15);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    border-top-left-radius: 0.42rem;
+    border-bottom-left-radius: 0.42rem;
+    padding-right: 3.5rem !important;
+}
+.btn.btn-bg-light {
+    background-color: #f2f5f8;
+    border-color: #f2f5f8;
+}
+.btn.btn-bg-light i.f1::before {
+    color: #2fa84f;
+    font-weight: 600;
+    font-size: 16px;
+}
+.btn.btn-bg-light i.f2::before {
+    color: #2bace2;
+    font-weight: 600;
+    font-size: 16px;
+}
+.btn.btn-bg-light i.f3::before {
+    color: #ea3d2f;
+    font-weight: 600;
+    font-size: 16px;
+}
+.notelabel{
+    position: absolute;
+    padding: 5px;
+    background-color: #2bace2;
+    color: #fff;
+    border-radius: 0.2rem;
+}
+.hamburger-inner, .hamburger-inner::before, .hamburger-inner::after {
+    background-color: #28ace2 !important;}
+    .rc-tabs-tab-prev-icon, .rc-tabs-tab-next-icon{margin-top: 21px;}
+    .rc-tabs-top .rc-tabs-ink-bar {
+     background: #28ace2 !important;
+}
+.rc-tabs-ink-bar {
+    box-shadow: 0 16px 26px -10px rgb(40 172 226), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(46, 56, 203, 0.2) !important;
+}
+
+.rbt-input-main.form-control.rbt-input {
+    height: 31px;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 1280px) {
+
+ol.forms-wizard.responsive-wizard li { display: inline-block; }
+
+ol.forms-wizard.responsive-wizard li span { padding:0 5px; }
+
+}
+
+@media only screen and (min-device-width :768px) and (max-device-width :991px) {
+
+    .dropdown-menu.dropdown-menu-lg { transform: translate3d(-15px, 65px, 0px) !important; }
+
+}
+
+
+@media only screen and (min-device-width :992px) and (max-device-width :1280px) {
+
+.dropdown-menu.dropdown-menu-lg { transform: translate3d(-180px, 55px, 0px) !important; }    
+
+}
+
+/* .app-header__logo .logo-src{background: none !important;} */
+/* .app-header__logo .logo-src{margin-top: 6px;} */
+/* .app-header__logo .logo-src::before{content: 'VCC';font-size: 26px;color: #28ace2;padding-left: 10px;font-weight: 600;} */
+
+    </style>
+
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+</body>
+
+</html>

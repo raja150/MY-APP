@@ -1,0 +1,52 @@
+﻿using AutoMapper;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TranSmart.API.Models.Import;
+using TranSmart.Data;
+using TranSmart.Domain.Entities.Leave;
+using TranSmart.Domain.Entities.Organization;
+using TranSmart.Domain.Models.LM_Attendance.List;
+using TranSmart.Domain.Models.LM_Attendance.Request;
+using TranSmart.Domain.Models.LM_Attendance.Responce;
+using TranSmart.Domain.Models.LM_Attendance.Response;
+
+namespace TranSmart.API.AutoMapper
+{
+	public class AttendanceProfile : Profile
+	{
+		public AttendanceProfile()
+		{
+			CreateMap<AttendanceModel, Attendance>();
+			CreateMap<Attendance, AttendanceModel>()
+				.ForMember(x => x.AllowWebPunch, o => o.MapFrom(x => x.Employee.AllowWebPunch));
+			CreateMap<Attendance, AttendanceList>();
+			CreateMap<Attendance, AttendanceLogsImportModel>();
+
+			CreateMap<Attendance, AttendanceDetails>()
+				.ForMember(dest => dest.AttendanceID, opt => opt.MapFrom(x => x.ID))
+				.ForMember(dest => dest.AttendanceStatusID, opt => opt.MapFrom(x => (AttendanceStatus)x.AttendanceStatus))
+				.ForMember(dest => dest.LeaveTypeName, opt => opt.MapFrom(x => x.LeaveType.Code))
+			  //if day is half day then passing first half and second half details
+			  // if day is present then passing timings
+			  .ForMember(dest => dest.WorkTime, opt => opt.MapFrom(x => x.WorkTime))
+			  .ForMember(dest => dest.AttendanceStatus,
+							opt => opt.MapFrom(x => (x.IsHalfDay != null && x.IsHalfDay == true) ?
+									string.Format("{0}\n{1}", Enum.GetName(typeof(AttendanceStatus),
+											x.AttendanceStatus), Enum.GetName(typeof(AttendanceStatus), x.HalfDayType))
+									: ((AttendanceStatus)x.AttendanceStatus).ToString()));
+
+			CreateMap<Employee, EmployeeAttendance>()
+				.ForMember(dest => dest.Department, opt => opt.MapFrom(x => x.Department.Name))
+				.ForMember(dest => dest.Attendance, opt => opt.MapFrom(x => x.Attendances))
+				.ForMember(dest => dest.EmployeeNo, opt => opt.MapFrom(x => x.No))
+				.ForMember(dest => dest.Designation, opt => opt.MapFrom(x => x.Designation.Name));
+
+			CreateMap<WebAttendanceRequest, WebAttendance>();
+			CreateMap<WebAttendance, WebAttendanceModel>()
+				.ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(x => x.Employee.Name))
+				.ForMember(dest => dest.Designation, opt => opt.MapFrom(x => x.Employee.Designation.Name));
+		}
+	}
+}

@@ -1,0 +1,53 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>TranSmart.Domain</AssemblyName>
+    <RootNamespace>TranSmart.Domain</RootNamespace>
+    <CodeAnalysisRuleSet>..\.sonarlint\hris_devcsharp.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\LM_Attendance\Response\**" />
+    <Compile Remove="Models\Nursing\**" />
+    <Compile Remove="Reports\Generated\**" />
+    <EmbeddedResource Remove="Models\LM_Attendance\Response\**" />
+    <EmbeddedResource Remove="Models\Nursing\**" />
+    <EmbeddedResource Remove="Reports\Generated\**" />
+    <None Remove="Models\LM_Attendance\Response\**" />
+    <None Remove="Models\Nursing\**" />
+    <None Remove="Reports\Generated\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\.sonarlint\hris_dev\CSharp\SonarLint.xml" Link="SonarLint.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Reports\Setup\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Transmart.Core\TranSmart.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

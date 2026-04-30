@@ -1,0 +1,356 @@
+import React, { Fragment, useEffect, useState } from 'react';
+import { Button, Card, CardBody, Col, Row } from 'reactstrap';
+import styled from 'styled-components';
+import MoneyFormat from 'components/Formats/MoneyFormat'
+import * as _ from 'lodash'
+function DeclarationSummary(props, form) {debugger
+    const { declaration } = props;
+    const [hide, setHide] = useState(!_.isEmpty(props.settings) && props.settings.lock == 1 ? true : false)
+    const TableComponent = styled.table`
+    width: 100%;
+    margin-bottom: 1em;
+    border: 1px solid;
+    thead th {
+        border-bottom: 1px solid;
+        padding: 0.55rem;
+    }
+    td {
+        border: none ;
+        border-right: 1px solid ;
+        border-collapse: collapse;
+        padding: 0.55rem;
+    }`
+    if (declaration == undefined || declaration.id == undefined) return <></>;
+
+    return (
+    <Fragment>
+        <Card>
+            <CardBody>
+                <Row className='mb-5'>
+                    <Col xs='12'>
+                        {props.declaration.isNewRegime == true ?
+                            <TableComponent>
+                              <thead>
+                                  <tr className='text-center'>
+                                      <th colSpan='4'>Details Of Salary Paid And Any Other Income and Tax Deducted</th>
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  <tr>
+                                      <td>1.Total Income (8-10)</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td className='text-right'>{declaration.salary}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>2.Tax on Total Income</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td className='text-right'>{declaration.tax}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>3.Education Cess @3% (on tax computed at S.No.12)</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td className='text-right'>{declaration.cess}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>4.Tax Payable(12+13)</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td className='text-right'>{declaration.taxPayable}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>5.Less: Relief under Section 89</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td className='text-right'>{declaration.relief}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>6.Tax Payable(14-15)</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td className='text-right'>{declaration.taxPayable}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>7.Tax Deducted(12+13)</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td className='text-right'>{declaration.taxPaid}</td>
+                                  </tr>
+                                  <tr>
+                                      <td>8.Net Tax Payable / Refundable (16-17)</td>
+                                      <td></td>
+                                      <td></td>
+                                      <td className='text-right'>{declaration.due}</td>
+                                  </tr>
+                              </tbody>
+                          </TableComponent>
+                            :
+                            <TableComponent >
+                            <thead>
+                                <tr className='text-center'>
+                                    <th colSpan='4'> Details Of Salary Paid And Any Other Income and Tax Deducted</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td className='w-50'>1. Gross Salary </td>
+                                    <td className='w-15'></td>
+                                    <td className='w-15'></td>
+                                    <td className='w-15'></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(a) Salary as per provision contained in sec.17(1)</td>
+                                    <td className='text-right'><MoneyFormat value={declaration.salary} /></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(b) values of perquisites u/s 17(2)(as per Form no12 BA, Whenever applicable</td>
+                                    <td className='text-right'><MoneyFormat value={declaration.perquisites} /></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(c) Profits in lieu of salary u/s 17(3) (as per Form no12 BA, Whenever applicable</td>
+                                    <td className='text-right'><MoneyFormat value={declaration.previousEmployment} /></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(d) Total</td>
+                                    <td></td>
+                                    <td className='text-right'><MoneyFormat value={declaration.totalSalary} /></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>2.Less:Allowance to the extent exempt u/s 10</td>
+                                    <td></td>
+                                    <td className='text-right'><MoneyFormat value={declaration.allowance} /></td>
+                                    <td></td>
+                                </tr>
+                                {
+                                    declaration.allowances.map((aItem) => {
+                                        return <tr>
+                                            <td className='pl-3'>{aItem.name}</td>
+                                            <td></td>
+                                            <td className='text-right'>{aItem.amount}</td>
+                                            <td></td>
+                                        </tr>
+                                    })
+                                }
+                                <tr>
+                                    <td>3.Balance(1-2)[Inclusive of Previous  Employer Sal After Sec 10]</td>
+                                    <td className='text-right'>{declaration.totalSalary}</td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.balance}</td>
+                                </tr>
+                                <tr>
+                                    <td>4.Deductions:</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(a) Standard Deduction</td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.standardDeduction}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(b) Entertainment Allowance</td>
+                                    <td></td>
+                                    <td className='text-right'>0</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(c) Tax on Employment [inclusive of Previous Employer PT] </td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.taxOnEmployment}</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>5.Aggregate of 4(a) and (b)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.deductions}</td>
+                                </tr>
+                                <tr>
+                                    <td>6.Income chargeable under the head "Salaries" (3-5)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.incomeChargeable}</td>
+                                </tr>
+                                <tr>
+                                    <td>7. Add: Any other income reported by the Employee</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>Income from House Property</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.houseIncome}</td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>Other Income</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.otherIncome}</td>
+                                </tr>
+                                <tr>
+                                    <td>8. Gross Total Income(6 + 7)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.grossTotal}</td>
+                                </tr>
+                                <tr className='border-top'>
+                                    <td>9.Deduction Under chapter VI-A[incl .of Prv Employer Investments]</td>
+                                    <td className='text-center'><strong>Gross Amt.</strong></td>
+                                    <td className='text-center'><strong>Qualifying Amt.</strong></td>
+                                    <td className='text-center'><strong>Deductible Amt.</strong></td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(A) Sections 80C, 80CCC, 80CCD</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                {
+                                    declaration.epf && declaration.epf > 0 ?
+                                        <tr>
+                                            <td className='pl-5'>Provident Fund</td>
+                                            <td className='text-right'>{declaration.epf}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr> : ''
+                                }
+                                {
+                                    declaration.section80CLines.map(eightc => {
+                                        return <tr>
+                                            <td className='pl-5'>{eightc.name}</td>
+                                            <td className='text-right'>{eightc.amount}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    })
+                                }
+                                <tr>
+                                    <td className='pl-3'>Total</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.eightyC}</td>
+                                </tr>
+                                <tr>
+                                    <td className='pl-3'>(B) Other Section Under Chapter VI-A</td>
+                                    <td className='text-center'><strong>Gross Amt.</strong></td>
+                                    <td className='text-center'><strong>Qualifying Amt.</strong></td>
+                                    <td className='text-center'><strong>Deductible Amt.</strong></td>
+                                </tr>
+                                {
+                                    declaration.eightyD && declaration.eightyD > 0 ?
+                                        <tr>
+                                            <td className='pl-5'>Under Section 80D-Meiclaim Insurence Premium</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td className='text-right'>{declaration.eightyD}</td>
+                                        </tr> : ''
+                                }
+                                {
+                                    declaration.sectionOtherLines.map(othSec => {
+                                        return <tr>
+                                            <td className='pl-5'>{othSec.name}</td>
+                                            <td className='text-right'>{othSec.amount}</td>
+                                            <td className='text-right'>{othSec.amount}</td>
+                                            <td className='text-right'>{othSec.amount}</td>
+                                        </tr>
+                                    })
+                                }
+                                <tr>
+                                    <td>10.Aggregate Of deductible amount under chapter VI-A</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.eightyC + declaration.eightyD + declaration.otherSections}</td>
+                                </tr>
+                                <tr>
+                                    <td>11.Total Income (8-10)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.taxable}</td>
+                                </tr>
+                                <tr>
+                                    <td>12.Tax on Total Income</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.tax}</td>
+                                </tr>
+                                <tr>
+                                    <td>13.Education Cess @3% (on tax computed at S.No.12)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.cess}</td>
+                                </tr>
+                                <tr>
+                                    <td>14.Tax Payable(12+13)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.taxPayable}</td>
+                                </tr>
+                                <tr>
+                                    <td>15.Less: Relief under Section 89</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.relief}</td>
+                                </tr>
+                                <tr>
+                                    <td>16.Tax Payable(14-15)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.taxPayable}</td>
+                                </tr>
+                                <tr>
+                                    <td>17.Tax Deducted(12+13)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.taxPaid}</td>
+                                </tr>
+                                <tr>
+                                    <td>18.Net Tax Payable / Refundable (16-17)</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td className='text-right'>{declaration.due}</td>
+                                </tr>
+                            </tbody>
+                        </TableComponent>
+                        }
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col xs='12'>
+                        <Button disabled={hide} className=" btn-icon btn-success" key='button' color="success" type="submit" name="save" onClick={(e) => props.handleEdit()} >
+                            <i className="pe-7s-paper-plane btn-icon-wrapper font-weight-bold text-black"> </i> Edit
+                        </Button>
+                    </Col>
+                </Row>
+            </CardBody>
+        </Card>
+    </Fragment>
+    );
+}
+
+export default DeclarationSummary;
+
+
+
+
+
+
+
+
+
+
+
+

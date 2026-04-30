@@ -1,0 +1,95 @@
+import { notifySaved } from 'components/alert/Toast';
+import { Radio, TextAreaInput } from 'components/dynamicform/Controls';
+import Loading from 'components/Loader';
+import InfoDisplay from 'domain/Approvals/InfoDisplay';
+import { Form, Formik } from 'formik';
+import queryString from 'query-string';
+import React, { Fragment, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Button, Card, CardBody, Col, Row } from 'reactstrap';
+import ApplyLeavesService from 'services/Leave/ApplyLeave';
+import * as crypto from 'utils/Crypto';
+import * as dateUtil from 'utils/date';
+import * as formUtil from 'utils/form';
+import { MORE_DETAILS } from '../../Approvals/navigation';
+import { APPROVAL_LEAVES } from '../navigation';
+import * as compare from '../../../utils/Compare';
+import ApproveOrReject from './ApproveOrReject';
+
+//This Is popUp Screen
+export default function LMApproveLeave(props) {
+    const [state, setState] = useState({
+        isLoading: true, formValues: {}, Employees: [], appliedLeaves: [], approvedLeaves: [],
+         request: [], weekLeaves: []
+    })
+    const rid = props.rid ? props.rid : null;
+    const [loading, setLoading] = useState(false);
+    let history = useHistory();
+    useEffect(() => {
+        let formValues = {}, request = {}, weekLeaves = [], appliedLeaves = [], approvedLeaves = []
+        const fetchData = async () => {
+            if (rid) {
+                await ApplyLeavesService.getLeaveById(rid).then((result) => {
+                    request = result.data
+                });
+                await ApplyLeavesService.GetWeekLeaves(request.employeeId, request.fromDate, request.toDate).then((res) => {
+                    weekLeaves = res.data
+                    weekLeaves.forEach(function (item) {debugger
+                        if (compare.isEqual(item.status ,'1')) {
+                            appliedLeaves.push(item)
+                        }
+                        else if (compare.isEqual(item.status, '2')) {
+                            approvedLeaves.push(item)
+                        }
+                    })
+                })
+                setState({ ...state, isLoading: false, request: request, weekLeaves: weekLeaves, appliedLeaves: appliedLeaves, approvedLeaves: approvedLeaves })//, weekLeaves: weekLeaves
+
+            }
+        }
+        fetchData()
+    }, [])
+    const handleSubmit = async (data, actions) => {
+        await ApplyLeavesService.approveOrReject(data).then((res) => {
+            notifySaved();
+            props.toggle();
+            props.handleSearch(0);
+        }).catch((error) => {
+            formUtil.displayFormikError(error, actions)
+        });
+    }
+    const MyCalendar = async (e) => {
+        e.preventDefault();
+        const qry = {
+            r: (dateUtil.getDate(state.request.fromDate) ? crypto.encrypt(dateUtil.getDate(state.request.fromDate)) : ''),
+            s: crypto.encrypt(rid)
+        };
+        history.push(MORE_DETAILS + queryString.stringify(qry));
+    };
+const handleReject = async(data)=>{
+    await ApplyLeavesService.rejectAfterApprove(data).then((res) => {
+        notifySaved();
+        props.toggle();
+        props.handleSearch(0);
+    }).catch((error) => {
+        formUtil.displayErrors(error)
+    });
+}
+    return (
+        <Fragment>
+            <Card>
+                <CardBody>
+                    {state.isLoading ? <Loading /> :
+                        <ApproveOrReject data={state.request}
+                            applied={state.appliedLeaves} approved={state.approvedLeaves}
+                            app={state.weekLeaves} request = {state.request}
+                            handleSubmit={handleSubmit} handleMore={MyCalendar} 
+                            handleReject={handleReject} 
+                            name="Leave"
+                            />
+                    }
+                </CardBody>
+            </Card>
+        </Fragment>
+    )
+}

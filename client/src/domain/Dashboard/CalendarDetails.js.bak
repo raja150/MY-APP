@@ -1,0 +1,37 @@
+import Loading from 'components/Loader';
+import React, { Fragment, useEffect, useState } from 'react'
+import { Card, CardBody } from 'reactstrap';
+import MyCalendar from '../LeaveManagement/Leaves/Calendar';
+import moment from 'moment';
+import * as crypto from 'utils/Crypto'
+import queryString from 'query-string'
+import ApplyLeavesService from 'services/Leave/ApplyLeave';
+export default function CalendarDetails(props) {
+    const parsed = queryString.parse(props.location.search);
+    const date = parsed.r ? crypto.decrypt(parsed.r) : null;
+    const [state, setState] = useState({ isLoading: true, data: [], approveData: {}, weekLeaves: [], appliedLeaves: [], approvedLeaves: [] });
+    useEffect(() => {
+        const fetchData = async () => {
+            let data = []
+            if (date != null) {//moment(dateFrom).subtract(1, 'months').format('YYYY-MM-DD')
+                await ApplyLeavesService.GetLeavesByMonth(moment(date).format('MM')).then((response) => {
+                    data = response.data
+                });
+                setState({ isLoading: false, data: data })
+            }
+
+        }
+        fetchData();
+    }, []);
+    return (
+        <Fragment>
+            <Card>
+                {state.isLoading ? <Loading /> :
+                    <CardBody>
+                        <MyCalendar data={state.data} month={moment(date).format('MMMM')} />
+                    </CardBody>
+                }
+            </Card>
+        </Fragment>
+    )
+}

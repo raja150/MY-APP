@@ -1,0 +1,29 @@
+<FineCodeCoverage>
+	<Enabled>
+	True
+  </Enabled>
+  <Exclude>
+	[ThirdParty.*]*
+	[FourthParty]*
+  </Exclude>
+  <Include>
+	[*]*
+  </Include>
+  <ExcludeByFile>
+	**/Migrations/*
+	**/Generated/**
+	**/Hacks/*.cs
+	**/Data/PTTaxCalculate.cs
+	**/Program.cs
+	**/Startup.cs
+  </ExcludeByFile>
+  <ExcludeByAttribute>
+	MyCustomExcludeFromCodeCoverage
+  </ExcludeByAttribute>
+  <IncludeTestAssembly>
+	False
+  </IncludeTestAssembly>
+  <ModulePathsExclude>
+   .*Fabrikam.Math.UnitTest.dll
+  </ModulePathsExclude>
+</FineCodeCoverage>

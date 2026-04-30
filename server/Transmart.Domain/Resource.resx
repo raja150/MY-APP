@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Aadhaar_Must_Be_12_Numbers" xml:space="preserve">
+    <value>Aadhaar must be 12 numbers.</value>
+  </data>
+  <data name="Age_must_be_18_to_join" xml:space="preserve">
+    <value>Age must be 18 to join.</value>
+  </data>
+  <data name="Both_Account_Numbers_Need_To_Be_Same" xml:space="preserve">
+    <value>Both account numbers need to be same!</value>
+  </data>
+  <data name="Centum_Club_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Centum club must be greater than or equal to 0.</value>
+  </data>
+  <data name="Date_of_birth_should_be_less_than_current_date" xml:space="preserve">
+    <value>The date of birth should be less than the current date.</value>
+  </data>
+  <data name="Date_Of_Joining_Should_Be_Greater_Than_Date_Of_Birth" xml:space="preserve">
+    <value>The date of joining should be greater than the date of birth.</value>
+  </data>
+  <data name="Date_of_joining_should_be_less_than_current_date" xml:space="preserve">
+    <value>The date of joining should be less than the current date.</value>
+  </data>
+  <data name="Date_Of_Last_Working_Should_Be_Greater_Than_Date_Of_Joining" xml:space="preserve">
+    <value>The date of last working day should be greater than the date of joining.</value>
+  </data>
+  <data name="Double_Pay_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Double pay must be greater than or equal to 0.</value>
+  </data>
+  <data name="Employee_No_Is_Required" xml:space="preserve">
+    <value>Employee No is required.</value>
+  </data>
+  <data name="External_Quality_Feedback_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>External quality feedback must be greater than or equal to 0.</value>
+  </data>
+  <data name="Fax_Files_And_Arrears_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Fax files and arrears must be greater than or equal to 0.</value>
+  </data>
+  <data name="First_Minute_Incentives_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>First minute incentives must be greater than or equal to 0.</value>
+  </data>
+  <data name="Internal_Quality_Feedback_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Internal quality feedback must be greater than or equal to 0.</value>
+  </data>
+  <data name="Last_Working_Date_Is_Required" xml:space="preserve">
+    <value>Last working date is required</value>
+  </data>
+  <data name="Late_Coming_Deduction_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Late coming deduction must be greater than or equal to 0.</value>
+  </data>
+  <data name="Loan_deducation_date_should_be_greaterthan_or_equal_to_the_loan_release_date" xml:space="preserve">
+    <value>The loan deduction date should be greater than or equal to the loan release date.</value>
+  </data>
+  <data name="Marriage_anniversary_should_be_greater_than_date_of_birth" xml:space="preserve">
+    <value>The marriage anniversary should be greater than the date of birth.</value>
+  </data>
+  <data name="Monthly_amount_should_be_less_than_loan_Amount" xml:space="preserve">
+    <value>The monthly amount should be less than the loan amount.</value>
+  </data>
+  <data name="Night_Shift_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Night shift must be greater than or equal to 0.</value>
+  </data>
+  <data name="Other_Deduction_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Other deductions must be greater than or equal to 0.</value>
+  </data>
+  <data name="Other_Incentives_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Other incentives must be greater than or equal to 0.</value>
+  </data>
+  <data name="PayMonth_Is_Required" xml:space="preserve">
+    <value>PayMonth is required.</value>
+  </data>
+  <data name="Production_Incentives_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Production incentives must be greater than or equal to 0.</value>
+  </data>
+  <data name="Punctuality_Incentives_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Punctuality incentives must be greater than or equal to 0.</value>
+  </data>
+  <data name="RegEx_Aadhar" xml:space="preserve">
+    <value>^[2-9]{1}[0-9]{3}[ -]?[0-9]{4}[ -]?[0-9]{4}$</value>
+  </data>
+  <data name="RegEx_PAN" xml:space="preserve">
+    <value>^(?i)[A-Z]{3}[ABCFGHLJPTF]{1}[A-Z]{1}[0-9]{4}[A-Z]{1}$</value>
+  </data>
+  <data name="Spot_Incentives_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Spot incentives must be greater than or equal to 0.</value>
+  </data>
+  <data name="Sunday_Incentives_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Sunday incentives must be greater than or equal to 0.</value>
+  </data>
+  <data name="Transition_Team_Incentives_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Transition team incentives must be greater than or equal to 0.</value>
+  </data>
+  <data name="Unauthorized_Leave_Deduction_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Unauthorized leave deduction must be greater than or equal to 0.</value>
+  </data>
+  <data name="Weekly_Star_Incentives_Must_Be_Greater_Than_Or_Equal_To_0" xml:space="preserve">
+    <value>Weekly star incentives must be greater than or equal to 0.</value>
+  </data>
+  <data name="Year_of_Passing_Should_be_Less_than_Current_Date" xml:space="preserve">
+    <value>Year of passing should be less than the current date.</value>
+  </data>
+</root>

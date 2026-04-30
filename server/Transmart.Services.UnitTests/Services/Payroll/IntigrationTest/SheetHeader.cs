@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Transmart.Services.UnitTests.Services.Payroll.IntigrationTest
+{
+	public enum Header
+	{
+		SNo = 1,
+		Code,
+		DOJ,
+		DOR,
+		Salary,
+		ActualBasic,
+		ActualHRA,
+		ActualMedicalTransport,
+		ActualFoodCoupons,
+		ActualSpecialAllowance,
+		Month,
+		MonthStart,
+		MonthEnd,
+		MonthDays,
+		IsNewEmployee,
+		IsLeftEmployee,
+		EmployeeWorkingDays,
+		DaysPresent,
+		LOPDays,
+		LateComingDays,
+		UnauthorizedLeaves,
+		PayForBasic,
+		PayForHRA,
+		PayForMedicalTransport,
+		PayForFoodCoupons,
+		PayForSpecialAllowance,
+		Empty,
+		EarnedBasic,
+		EarnedHRA,
+		EarnedMedicalTransport,
+		EarnedFoodCoupons,
+		EarnedSpecialAllowance,
+		SalaryEarned,
+		Arrears,
+		Incentives,
+		GrossEarningtotal,
+		LOPAmount,
+		UnauthorizedAmount,
+		LateComingAmount,
+		StaffSalaryAdvances,
+		FoodCouponsDeduction,
+		Paycut,
+		NetSalaryEarned,
+		PT,
+		IncomeTax,
+		PFContribution,
+		ESIContribution,
+		ESIFinal,
+		GrossEarnings,
+		GrossEarningForTax,
+		GrossDeduction,
+		NetTakeHome,
+		Comment,
+		IncomeTaxCalc,		 
+	}
+}

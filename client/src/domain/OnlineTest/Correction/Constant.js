@@ -1,0 +1,1 @@
+export const CORRECTION = [{ value: 1, text: 'Correct' }, { value: 2, text: 'Wrong' }]

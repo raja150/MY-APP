@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\IHMS\server\Transmart.API\bin\Release\net5.0\publish\</_PublishTargetUrl>
+    <History>True|2023-06-20T09:00:42.4941685Z;True|2021-03-19T18:43:56.8330306+05:30;True|2021-03-19T18:39:37.9993178+05:30;True|2021-03-19T18:33:09.2613055+05:30;False|2021-03-19T18:21:19.9910515+05:30;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="TS4DB">
+      <Value>server=172.16.0.186%3b database=TS4_DB%3bUser Id=sa%3bPassword=1234%3b</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

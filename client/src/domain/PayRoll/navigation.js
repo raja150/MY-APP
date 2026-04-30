@@ -1,0 +1,6 @@
+export const ARREARS='/m/payroll/Arrears'
+export const PAYMENT_INFO='/m/payroll/EmployeePayInfo'
+export const INCENTIVES_PAY_CUT = '/m/payroll/IncentivePayCut'
+export const INCOME_TAX_LIMIT='/m/payroll/IncomeTaxLimit'
+export const LATECOMER = '/m/Payroll/Latecomer'
+export const DECLARATION = '/m/Payroll/Declaration'

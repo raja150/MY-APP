@@ -1,0 +1,12 @@
+export const CardTypes = [{ id: 1, name: "Current No of Patient", colsize: 4 },
+{ id: 2, name: "Patient Registered", colsize: 4 },
+{ id: 3, name: "Upcoming Followup", colsize: 4 },
+{ id: 4, name: "Revenue", colsize: 4 },
+{ id: 5, name: "Top Trending Symptoms", colsize: 4 },
+{ id: 6, name: "Fast moving products", colsize: 4 },
+{ id: 7, name: "Least moving products", colsize: 4 },
+{ id: 8, name: "Product Expiry", colsize: 4 },
+{ id: 9, name: "Expense", colsize: 4 },
+{ id: 10, name: "Appointments Status", colsize: 8 }, 
+{ id: 12, name: "Pharmacy Product Count", colsize: 4 },
+{ id: 13, name: "No of patients referred to Lab", colsize: 4 }]

@@ -1,0 +1,12 @@
+{
+  "ServerUri": "http://192.168.200.85:9000",
+  "Organization": null,
+  "ProjectKey": "HRIS_Dev",
+  "ProjectName": "HRIS",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AYJJuKEFQuZ4SO4GvAEz",
+      "ProfileTimestamp": "2022-07-29T11:30:12Z"
+    }
+  }
+}

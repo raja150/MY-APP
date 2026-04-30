@@ -1,0 +1,345 @@
+﻿using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TranSmart.Core.Extension;
+using TranSmart.Core.Result;
+using TranSmart.Data;
+using TranSmart.Data.Paging;
+using TranSmart.Data.Repository;
+using TranSmart.Domain.Entities;
+using TranSmart.Domain.Entities.Organization;
+using TranSmart.Domain.Entities.Payroll;
+using TranSmart.Domain.Enums;
+using TranSmart.Domain.Models;
+
+namespace TranSmart.Service.Payroll
+{
+	public interface ISalaryService : IBaseService<Salary>
+	{
+		Task<IEnumerable<TemplateEarning>> GetTemplateComponents(Guid templateId);
+		Task<Salary> EmpSalary(Guid EmpId);
+		Task<Result<Salary>> AddBulk(List<Salary> items);
+	}
+
+	public class SalaryService : BaseService<Salary>, ISalaryService
+	{
+		public SalaryService(IUnitOfWork uow) : base(uow)
+		{
+
+		}
+
+		public async Task<Result<Salary>> AddBulk(List<Salary> items)
+		{
+			var result = new Result<Salary>();
+			foreach (var modelItem in items)
+			{
+				//Find employee salary in database
+				var entity = await UOW.GetRepositoryAsync<Salary>().SingleAsync(x => x.EmployeeId == modelItem.EmployeeId);
+
+				var employee = await UOW.GetRepositoryAsync<Employee>().SingleAsync(x => x.ID == modelItem.EmployeeId);
+
+				//Employee salary not found then add to database
+				if (entity == null)
+				{
+					await AddAsync(modelItem);
+				}
+				else
+				{
+					//Call update salary function to add data into history
+					await UpdateSalary(modelItem, entity);
+					var replication =await UOW.GetRepositoryAsync<Replication>().SingleAsync(x => x.RefId == modelItem.EmployeeId
+								&& x.Category == (byte)ReplicationCategory.Salary
+								&& x.Type == (byte)ReplicationType.Update);
+
+					if (replication == null)
+					{
+						await UOW.GetRepositoryAsync<Replication>().AddAsync(new Replication
+						{
+							DepartmentId = employee.DepartmentId,
+							Type = (byte)ReplicationType.Update,
+							Category = (byte)ReplicationCategory.Salary,
+							RefId = modelItem.EmployeeId,
+						});
+					}
+					else
+					{
+						replication.Status = false;
+						UOW.GetRepositoryAsync<Replication>().UpdateAsync(replication);
+					}
+				}
+			}
+
+			try
+			{
+				await UOW.SaveChangesAsync();
+			}
+			catch (Exception ex)
+			{
+				result.AddMessageItem(new MessageItem(ex));
+			}
+
+			return result;
+		}
+		public override async Task<Result<Salary>> UpdateAsync(Salary item)
+		{
+			var executionResult = new Result<Salary>(false);
+
+			await OnBeforeUpdate(item, executionResult);
+			if (!executionResult.HasError)
+			{
+				Salary entitySal = await UOW.GetRepositoryAsync<Salary>().SingleAsync(x => x.ID == item.ID);
+				await UpdateSalary(item, entitySal);
+				try
+				{
+					await UOW.SaveChangesAsync();
+					executionResult.IsSuccess = true;
+					executionResult.ReturnValue = item;
+				}
+				catch (Exception ex)
+				{
+					executionResult.AddMessageItem(new MessageItem(ex));
+				}
+			}
+
+			await OnAfterUpdate(item, executionResult);
+			return executionResult;
+		}
+		public override async Task OnAfterAdd(Salary item, Result<Salary> executionResult)
+		{
+			var employee = await UOW.GetRepositoryAsync<Employee>().SingleAsync(x => x.ID == item.EmployeeId);
+
+			if (executionResult.IsSuccess)
+			{
+				await UOW.GetRepositoryAsync<Replication>().AddAsync(new Replication
+				{
+					DepartmentId = employee.DepartmentId,
+					Type = (byte)ReplicationType.Add,
+					Category = (byte)ReplicationCategory.Salary,
+					RefId = item.EmployeeId,
+				});
+				await UOW.SaveChangesAsync();
+			}
+			await base.OnAfterAdd(item, executionResult);
+		}
+
+		public override async Task OnAfterUpdate(Salary item, Result<Salary> executionResult)
+		{
+			//need change to async
+			var employee =await UOW.GetRepositoryAsync<Employee>().SingleAsync(x => x.ID == item.EmployeeId);
+			if (executionResult.IsSuccess)
+			{
+				var replication =await UOW.GetRepositoryAsync<Replication>().SingleAsync(x => x.RefId == item.EmployeeId
+								&& x.Category == (byte)ReplicationCategory.Salary
+								&& x.Type == (byte)ReplicationType.Update);
+				if (replication == null)
+				{
+					await UOW.GetRepositoryAsync<Replication>().AddAsync(new Replication
+					{
+						DepartmentId = employee.DepartmentId,
+						Type = (byte)ReplicationType.Update,
+						Category = (byte)ReplicationCategory.Salary,
+						RefId = item.EmployeeId,
+					});
+				}
+				else
+				{
+					replication.Status = false;
+					UOW.GetRepositoryAsync<Replication>().UpdateAsync(replication);
+				}
+
+				await UOW.SaveChangesAsync();
+			}
+			await base.OnAfterUpdate(item, executionResult);
+		}
+		private async Task UpdateSalary(Salary item, Salary entitySal)
+		{
+			//Compare edit object with database object
+			if (!entitySal.Equals(item))
+			{
+				await UOW.GetRepositoryAsync<SalaryHistory>().AddAsync(entitySal.AuditObject(entitySal));
+				entitySal.Update(item);
+				UOW.GetRepositoryAsync<Salary>().UpdateAsync(entitySal);
+			}
+
+			#region Earnings
+			var entitySalComp = await UOW.GetRepositoryAsync<SalaryEarning>().GetAsync(
+				x => x.SalaryId == entitySal.ID);
+
+			//Compare edited components with database components and update, insert and delete
+
+			//Both having same component 
+			CollectionCompareResult<SalaryEarning> compareEarningList = entitySalComp.Compare(item.Earnings, (x, y) => x.ComponentId.Equals(y.ComponentId));
+			foreach (SalaryEarning comp in compareEarningList.Same)
+			{
+				SalaryEarning editComp = item.Earnings.FirstOrDefault(x => x.ComponentId == comp.ComponentId);
+				if (!comp.Equals(editComp))
+				{
+					await UOW.GetRepositoryAsync<SalaryEarningHistory>().AddAsync(comp.AuditObject(comp));
+					//editComp.SalaryId =
+					comp.Update(editComp);
+					UOW.GetRepositoryAsync<SalaryEarning>().UpdateAsync(comp);
+				}
+			}
+			//New Earning from edit
+			foreach (SalaryEarning comp in compareEarningList.Added)
+			{
+				//Update salary id for new components
+				comp.SalaryId = entitySal.ID;
+				await UOW.GetRepositoryAsync<SalaryEarning>().AddAsync(comp);
+			}
+
+			//delete Earning from edit
+			foreach (SalaryEarning comp in compareEarningList.Deleted)
+			{
+				await UOW.GetRepositoryAsync<SalaryEarningHistory>().AddAsync(comp.AuditObject(comp));
+				UOW.GetRepositoryAsync<SalaryEarning>().DeleteAsync(comp);
+			}
+			#endregion
+
+			#region Deduction
+
+			var entitySalDeduct = await UOW.GetRepositoryAsync<SalaryDeduction>().GetAsync(
+				x => x.SalaryId == entitySal.ID);
+			//Compare edited Deductions with database Deductions and update, insert and delete
+
+			//Both having same Deductions 
+
+			CollectionCompareResult<SalaryDeduction> compareList = entitySalDeduct.Compare(item.Deductions, (x, y) => x.DeductionId.Equals(y.DeductionId));
+			foreach (SalaryDeduction deduct in compareList.Same)
+			{
+				SalaryDeduction editDeduct = item.Deductions.FirstOrDefault(x => x.DeductionId == deduct.DeductionId);
+				if (!deduct.Equals(editDeduct))
+				{
+					await UOW.GetRepositoryAsync<SalaryDeductionHistory>().AddAsync(deduct.AuditObject(deduct));
+					deduct.Update(editDeduct);
+					UOW.GetRepositoryAsync<SalaryDeduction>().UpdateAsync(deduct);
+				}
+			}
+
+			//New Deductions from edit 
+			foreach (SalaryDeduction comp in compareList.Added)
+			{
+				//Update salary id for new Deductions 
+				comp.SalaryId = entitySal.ID;
+				await UOW.GetRepositoryAsync<SalaryDeduction>().AddAsync(comp);
+			}
+
+			//delete Deductions from edit 
+			foreach (SalaryDeduction comp in compareList.Deleted)
+			{
+				await UOW.GetRepositoryAsync<SalaryDeductionHistory>().AddAsync(comp.AuditObject(comp));
+				UOW.GetRepositoryAsync<SalaryDeduction>().DeleteAsync(comp);
+			}
+			#endregion
+		}
+
+		//public override void OnBeforeUpdate(Salary item, Result<Salary> executionResult)
+		//{
+		//    if (!executionResult.HasError)
+		//    {
+		//        Salary entity = _UOW.GetRepository<Salary>().Single(x => x.ID == item.ID, include: i => i.Include(x => x.Components));
+
+
+		//        SalaryHistory history = new SalaryHistory
+		//        {
+		//            ID = Guid.NewGuid(),
+		//            SalaryId = entity.ID,
+		//            AddedAt = entity.AddedAt,
+		//            AnnualCTC = entity.Annually,
+		//            CostToCompany = entity.CTC,
+		//            CreatedBy = entity.CreatedBy,
+		//            EmployeeId = entity.EmployeeId,
+		//            TemplateId = entity.TemplateId,
+		//            MonthlyCTC = entity.Monthly,
+		//            Components = new List<SalaryComponentHistory>()
+		//        };
+
+		//        if (entity.Components.Count > 0)
+		//        {
+		//            foreach (var headers in entity.Components)
+		//            {
+		//                history.Components.Add(new SalaryComponentHistory
+		//                {
+		//                    ID = Guid.NewGuid(),
+		//                    SalaryComponentId = headers.ID,
+		//                    SalaryId = headers.SalaryId,
+		//                    ComponentId = headers.ComponentId,
+		//                    Type = headers.Type,
+		//                    Percentage = headers.Percentage,
+		//                    Monthly = headers.Monthly,
+		//                    Annually = headers.Annually,
+		//                    PercentOnCompId = headers.PercentOnCompId,
+		//                    CreatedBy = headers.CreatedBy,
+		//                    AddedAt = headers.AddedAt,
+		//                    ModifiedAt = headers.ModifiedAt,
+		//                    ModifiedBy = headers.ModifiedBy,
+		//                    IsDeleted = headers.IsDeleted
+		//                });
+		//            }
+		//        }
+		//        _UOW.GetRepository<SalaryHistory>().Add(history);
+		//    }
+		//    base.OnBeforeUpdate(item, executionResult);
+		//}
+
+		public override async Task<Salary> GetById(Guid id)
+		{
+			return await UOW.GetRepositoryAsync<Salary>().SingleAsync(
+				predicate: p => p.ID == id,
+				include: i => i.Include(x => x.Employee).Include(X => X.Deductions)
+				.Include(x => x.Earnings).ThenInclude(x => x.Component)
+				.Include(x => x.Earnings).ThenInclude(x => x.PercentOnComp));
+		}
+		public override async Task<IPaginate<Salary>> GetPaginate(BaseSearch baseSearch)
+		{
+			return await UOW.GetRepositoryAsync<Salary>().GetPageListAsync(
+			   predicate: x => ((string.IsNullOrEmpty(baseSearch.Name) || x.Employee.No.Contains(baseSearch.Name)) ||
+			   (string.IsNullOrEmpty(baseSearch.Name) || x.Employee.Name.Contains(baseSearch.Name))),
+			   include: i => i.Include(x => x.Employee).ThenInclude(x => x.Department)
+			   .Include(x => x.Employee).ThenInclude(x => x.Designation),
+			   index: baseSearch.Page, size: baseSearch.Size, sortBy: baseSearch.SortBy ?? "Employee.Name", ascending: !baseSearch.IsDescend);
+		}
+
+		public async Task<IEnumerable<TemplateEarning>> GetTemplateComponents(Guid templateId)
+		{
+			return await UOW.GetRepositoryAsync<TemplateEarning>().GetAsync(
+				predicate: p => p.TemplateId == templateId,
+				include: i => i.Include(x => x.PercentOnComp).Include(x => x.Component),
+				orderBy: o => o.OrderByDescending(x => x.AddedAt));
+		}
+		public override async Task OnBeforeAdd(Salary item, Result<Salary> executionResult)
+		{
+			if (!executionResult.HasError)
+			{
+				Salary empSalary = await UOW.GetRepositoryAsync<Salary>().SingleAsync(x => x.EmployeeId == item.EmployeeId);
+				if (empSalary != null)
+				{
+					executionResult.AddMessageItem(new MessageItem(
+						nameof(Salary.EmployeeId), Resource.Employee_Salary_Already_Available));
+				}
+			}
+			await base.OnBeforeAdd(item, executionResult);
+		}
+
+		public async Task<Salary> EmpSalary(Guid EmpId)
+		{
+			return await UOW.GetRepositoryAsync<Salary>().SingleAsync(x => x.EmployeeId == EmpId,
+			  include: x => x.Include(x => x.Employee).Include(x => x.Earnings).ThenInclude(x => x.Component)
+				 .Include(x => x.Earnings).ThenInclude(x => x.PercentOnComp).Include(X => X.Deductions));
+		}
+
+		public override Task CustomValidation(Salary item, Result<Salary> result)
+		{
+			if (item.Monthly == 0)
+			{
+				result.AddMessageItem(new MessageItem(
+					   nameof(Salary.EmployeeId), Resource.Monthly_Salary_Should_Be_MoreThen_Zero));
+			}
+			return base.CustomValidation(item, result);
+		}
+
+	}
+}

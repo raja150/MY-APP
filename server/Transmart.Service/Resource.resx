@@ -1,0 +1,702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Aadhar_Already_Exists" xml:space="preserve">
+    <value>The Aadhaar number as of now exists.</value>
+  </data>
+  <data name="Aadhar_Must_Be_12_Numbers" xml:space="preserve">
+    <value>The Aadhaar number should have 12 numbers.</value>
+  </data>
+  <data name="AccountNo_Should_Contain_Digits_Only" xml:space="preserve">
+    <value>Account number should contain digit's only</value>
+  </data>
+  <data name="Account_No_Is_Required" xml:space="preserve">
+    <value>Account number is required.</value>
+  </data>
+  <data name="Account_No_Required_Length" xml:space="preserve">
+    <value>Account number length should be the same as the bank account no of digits ({0}).</value>
+  </data>
+  <data name="Account_Number_Already_Exists" xml:space="preserve">
+    <value>Account number as of now exists.</value>
+  </data>
+  <data name="ADJUST_LEAVE_ALREADY_EXIST" xml:space="preserve">
+    <value>The leave balance has already been adjusted for this leave type.</value>
+  </data>
+  <data name="Age_should_be_greater_than_15" xml:space="preserve">
+    <value>Age should be greater than 15.</value>
+  </data>
+  <data name="Already_Applied" xml:space="preserve">
+    <value>Already applied.</value>
+  </data>
+  <data name="Already_Applied_Pre_Consumable_Leaves" xml:space="preserve">
+    <value>The user has already applied pre-consumable leaves for this leave type.</value>
+  </data>
+  <data name="Already_Approved" xml:space="preserve">
+    <value>Already approved.</value>
+  </data>
+  <data name="Already_Leves_Applied_For_this_Dates" xml:space="preserve">
+    <value>Leaves applied for these dates.</value>
+  </data>
+  <data name="Already_Leves_Approved_For_this_Dates" xml:space="preserve">
+    <value>Leaves approved for these dates.</value>
+  </data>
+  <data name="Already_Record_Exist" xml:space="preserve">
+    <value>Already record is exist for the same quarter type</value>
+  </data>
+  <data name="Already_WFH_Applied_For_this_Dates" xml:space="preserve">
+    <value>WFH already applied for these dates</value>
+  </data>
+  <data name="ALREDY_APPPLIED_PRECONSUMABLE_LEAVES" xml:space="preserve">
+    <value>Pre-consumable leaves already applied.</value>
+  </data>
+  <data name="Applied_Leaves_are_less_Minimum_Leave" xml:space="preserve">
+    <value>Applied leaves are less than the minimum leaves.</value>
+  </data>
+  <data name="Applied_Leaves_Are_Less_Than_The_Minimum_Leaves" xml:space="preserve">
+    <value>Applied leaves are less than the minimum leaves.</value>
+  </data>
+  <data name="Arrear_Already_Exist" xml:space="preserve">
+    <value>Arrear already exist.</value>
+  </data>
+  <data name="Attendance_Already_Executed" xml:space="preserve">
+    <value>For this days attendance already executed</value>
+  </data>
+  <data name="Bank_Is_Required" xml:space="preserve">
+    <value>Bank is required!.</value>
+  </data>
+  <data name="Both_Account_Number_should_be_same" xml:space="preserve">
+    <value>Account number and re-enter account number are not matching.</value>
+  </data>
+  <data name="BREAK_TIME_SHOULD_NOT_BE_NEGATIVE" xml:space="preserve">
+    <value>The break time must be greater than or equal to 0.</value>
+  </data>
+  <data name="Cannot_Apply_WFH_More_Than_Six_Days" xml:space="preserve">
+    <value>Sorry! You can't apply WFH more than 6 days</value>
+  </data>
+  <data name="Cannot_Be_Editable" xml:space="preserve">
+    <value>This reply can't be editable</value>
+  </data>
+  <data name="Client_Visit_Already_Applied" xml:space="preserve">
+    <value>Sorry! Already You have applied client visit for these days</value>
+  </data>
+  <data name="Client_Visit_Already_Approved" xml:space="preserve">
+    <value>The client visit has been approved.</value>
+  </data>
+  <data name="Client_Visit_Already_Rejected" xml:space="preserve">
+    <value>The client visit has been rejected.</value>
+  </data>
+  <data name="Client_Visit_Applied_For_These_Days" xml:space="preserve">
+    <value>Sorry! you are applied client visits for these days</value>
+  </data>
+  <data name="Closed_Ticket_Already_Exist" xml:space="preserve">
+    <value>Closed ticket already exist.</value>
+  </data>
+  <data name="Component_Already_Exist" xml:space="preserve">
+    <value>Earning component already exist.</value>
+  </data>
+  <data name="Contact_Number_Must_Be_Number_And_10_Digits_Only" xml:space="preserve">
+    <value>Contact number must be number and 10 digits only</value>
+  </data>
+  <data name="Current_Dept_And_Tranfered_Dept_Are_Same" xml:space="preserve">
+    <value>Current department is similar to transfered department</value>
+  </data>
+  <data name="Date_Is_Already_Exist" xml:space="preserve">
+    <value>Already exist.</value>
+  </data>
+  <data name="Date_Of_Birth_Should_Be_Less_Than_Current_Date" xml:space="preserve">
+    <value>Date of birth should be lesser than the current date.</value>
+  </data>
+  <data name="Date_Of_Joining_Should_Be_Greater_Than_Date_Of_Birth" xml:space="preserve">
+    <value>Date of joining should be greater than the date of birth.</value>
+  </data>
+  <data name="Date_Of_Resignation_Should_Be_Greater_Than_Date_Of_Joining" xml:space="preserve">
+    <value>Date of resignation should be greater than the date of joining.</value>
+  </data>
+  <data name="Declaration_Already_Submitted" xml:space="preserve">
+    <value>The declaration has been submitted.</value>
+  </data>
+  <data name="Deduction_Component_Already_Exist" xml:space="preserve">
+    <value>Deduction component already exist.</value>
+  </data>
+  <data name="Default_Pay_Off_LeaveType_already_exists" xml:space="preserve">
+    <value>Default Pay Off Leave Type already exists</value>
+  </data>
+  <data name="Department_Already_Exists_In_The_Paper" xml:space="preserve">
+    <value>Department already exists in the Paper</value>
+  </data>
+  <data name="Department_Already_Removed_From_The_Paper" xml:space="preserve">
+    <value>Department already removed from the Paper</value>
+  </data>
+  <data name="Department_There_In_Exception" xml:space="preserve">
+    <value>As same department selected in exceptions, please change the department.</value>
+  </data>
+  <data name="Designation_Already_Exists_In_The_Paper" xml:space="preserve">
+    <value>Designation already exists in the Paper</value>
+  </data>
+  <data name="Designation_Not_Exist_in_the_Paper" xml:space="preserve">
+    <value>Designation not exist in the Paper</value>
+  </data>
+  <data name="Designation_There_In_Exception" xml:space="preserve">
+    <value>As same designation selected in exceptions, please change the designation.</value>
+  </data>
+  <data name="Different_Department" xml:space="preserve">
+    <value>The employee department and leave type department are not matching.</value>
+  </data>
+  <data name="Different_Designation" xml:space="preserve">
+    <value>The employee designation and leave type designation are not matching.</value>
+  </data>
+  <data name="Different_Gender" xml:space="preserve">
+    <value>Leaves are not applicable for gender other than.</value>
+  </data>
+  <data name="Different_Location" xml:space="preserve">
+    <value>The employee location and leave type location are not matching.</value>
+  </data>
+  <data name="Different_Martial_Status" xml:space="preserve">
+    <value>Leaves are not applicable for a marital status other than.</value>
+  </data>
+  <data name="Does_Not_Have_Permission_To_Close" xml:space="preserve">
+    <value>Sorry! you don't have permission to close this ticket</value>
+  </data>
+  <data name="Does_Not_Have_Permission_To_Edit" xml:space="preserve">
+    <value>Sorry! you don't have permission to edit the response</value>
+  </data>
+  <data name="Does_Not_Have_Permission_To_Replay" xml:space="preserve">
+    <value>Sorry! you don't have access to post reply for this ticket</value>
+  </data>
+  <data name="Does_Not_Have_Permission_To_Re_Assign" xml:space="preserve">
+    <value>Sorry! you don't have permission to assign this ticket</value>
+  </data>
+  <data name="Does_Not_Have_Permission_To_Transfer" xml:space="preserve">
+    <value>Sorry! you don't have perssion to transfer this ticket</value>
+  </data>
+  <data name="Duplicate_User" xml:space="preserve">
+    <value>Duplicate user.</value>
+  </data>
+  <data name="Email_Already_Exist" xml:space="preserve">
+    <value>Email already exists.</value>
+  </data>
+  <data name="Employee_Already_Exists" xml:space="preserve">
+    <value>Employee already exists.</value>
+  </data>
+  <data name="Employee_Bonus_Already_Exist" xml:space="preserve">
+    <value>Employee bonus already exist.</value>
+  </data>
+  <data name="Employee_Payment_Information_Is_Already_Added." xml:space="preserve">
+    <value>Employee payment information has been added.</value>
+  </data>
+  <data name="Employee_Salary_Already_Available" xml:space="preserve">
+    <value>Employee salary is already available.</value>
+  </data>
+  <data name="Employee_UnAuthorized_With_Same_Date_is_already_exists" xml:space="preserve">
+    <value>Employee Un-Authorized with same date is already exists</value>
+  </data>
+  <data name="Exception_Department" xml:space="preserve">
+    <value>Can't able to add, because the employee department is in the exception department.</value>
+  </data>
+  <data name="Exception_Designation" xml:space="preserve">
+    <value>Can't able to add, because the employee designation is in exception designation.</value>
+  </data>
+  <data name="Exception_Location" xml:space="preserve">
+    <value>Can't able to add, because the employee location is in the exception location.</value>
+  </data>
+  <data name="Financial_From_Year_Is_Not_Editable" xml:space="preserve">
+    <value>Financial from year is not editable.</value>
+  </data>
+  <data name="FirstHalf_Or_SecondHalf_Should_Select" xml:space="preserve">
+    <value>for Oneday WFH , either First half or Second Half Should select</value>
+  </data>
+  <data name="For_OneDay_Leave_Both_Halfs_Should_Not_Select" xml:space="preserve">
+    <value>For one day leave , only either first half or second half should select</value>
+  </data>
+  <data name="From_Date_AlwaysGreater_than_or_Equal_to_Today_Date" xml:space="preserve">
+    <value>From date is always greater than or equal to today's date.</value>
+  </data>
+  <data name="From_Date_Is_Always_Greater_Than_Today_Date" xml:space="preserve">
+    <value>From date is always greater than or equal to today's date.</value>
+  </data>
+  <data name="From_Date_Should_be_less_then_The_To_Date" xml:space="preserve">
+    <value>From date should be less than the to date.</value>
+  </data>
+  <data name="Group_Emp_Not_Allowed_As_Manager" xml:space="preserve">
+    <value>Group employee's are not allowed as manager</value>
+  </data>
+  <data name="HRA_Invalid_From _And_To_Dates" xml:space="preserve">
+    <value>Invalid rental from and rental to date in house rent details.</value>
+  </data>
+  <data name="Incentives_And_PayCut_Already_Exist" xml:space="preserve">
+    <value>Incentives and PayCut already exist.</value>
+  </data>
+  <data name="IncomeTo_Greater_Than_IncomeFrom" xml:space="preserve">
+    <value>Income to is always greater than income from.</value>
+  </data>
+  <data name="Income_Tax_Limit_Is_Already_exist" xml:space="preserve">
+    <value>Income tax limit is already exist.</value>
+  </data>
+  <data name="Installed_On_Is_Required" xml:space="preserve">
+    <value>Installed on is required!</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>Invalid.</value>
+  </data>
+  <data name="Invalid_Arrear" xml:space="preserve">
+    <value>Invalid arrear.</value>
+  </data>
+  <data name="Invalid_Declaration" xml:space="preserve">
+    <value>Invalid declaration.</value>
+  </data>
+  <data name="Invalid_Email_Format" xml:space="preserve">
+    <value>Invalid email format.</value>
+  </data>
+  <data name="Invalid_EmergencyContNo" xml:space="preserve">
+    <value>Invalid emergency contact number.</value>
+  </data>
+  <data name="Invalid_Employee" xml:space="preserve">
+    <value>Invalid employee.</value>
+  </data>
+  <data name="Invalid_Employee_Details" xml:space="preserve">
+    <value>Invalid employee details.</value>
+  </data>
+  <data name="Invalid_Format" xml:space="preserve">
+    <value>Invalid format.</value>
+  </data>
+  <data name="Invalid_IFSC_Code" xml:space="preserve">
+    <value>Invalid IFSC code</value>
+  </data>
+  <data name="Invalid_Input_Format" xml:space="preserve">
+    <value>Invalid input format.</value>
+  </data>
+  <data name="Invalid_Item" xml:space="preserve">
+    <value>Invalid item.</value>
+  </data>
+  <data name="Invalid_LateComers" xml:space="preserve">
+    <value>Invalid LateComer</value>
+  </data>
+  <data name="Invalid_Log_Response" xml:space="preserve">
+    <value>Invalid log response</value>
+  </data>
+  <data name="Invalid_Old_Password" xml:space="preserve">
+    <value>Invalid old password</value>
+  </data>
+  <data name="Invalid_PAN_Format" xml:space="preserve">
+    <value>Invalid PAN number format.</value>
+  </data>
+  <data name="Invalid_PayMonth" xml:space="preserve">
+    <value>Sorry! Invalid PayMonth</value>
+  </data>
+  <data name="Invalid_PaySheet" xml:space="preserve">
+    <value>Invalid pay sheet.</value>
+  </data>
+  <data name="Invalid_Question" xml:space="preserve">
+    <value>Question is Invalid</value>
+  </data>
+  <data name="Invalid_TAN_Format" xml:space="preserve">
+    <value>Invalid TAN number format.</value>
+  </data>
+  <data name="Invalid_Ticket" xml:space="preserve">
+    <value>Invalid ticket.</value>
+  </data>
+  <data name="Invalid_User" xml:space="preserve">
+    <value>Invalid user</value>
+  </data>
+  <data name="Invalid_User_Or_Refresh_Token" xml:space="preserve">
+    <value>Invalid user or refresh token</value>
+  </data>
+  <data name="IT_DECLARTION_IS_LOCKED" xml:space="preserve">
+    <value>IT declaration is locked.</value>
+  </data>
+  <data name="Latecomer_Already_Exist" xml:space="preserve">
+    <value>Latecomer already exist.</value>
+  </data>
+  <data name="Lead_ContactNo_Is_Already_Exist" xml:space="preserve">
+    <value>Mobile number already exists.</value>
+  </data>
+  <data name="Lead_ContactNo_Is_Digits_Only" xml:space="preserve">
+    <value>Mobile number should contain digits between 0 to 9.</value>
+  </data>
+  <data name="Lead_ContactNo_Is_Equal_To_10_Digits_Only" xml:space="preserve">
+    <value>Mobile number should contain only 10 digits.</value>
+  </data>
+  <data name="Leaves_are_Exceed_The_Maximum_Leaves" xml:space="preserve">
+    <value>Leaves have been exceeded to maximum leaves.</value>
+  </data>
+  <data name="Leaves_Are_Not_Available_To_Apply" xml:space="preserve">
+    <value>No leaves are available to apply.</value>
+  </data>
+  <data name="Leaves_are_Not_available_to_approve" xml:space="preserve">
+    <value>Sorry! Leaves are not available to approve</value>
+  </data>
+  <data name="LEAVES_EXCEEDED_LEAVE_APPLICATIONS" xml:space="preserve">
+    <value>Leaves Exceeded Leave Applications</value>
+  </data>
+  <data name="Leaves_Exceed_Available_Leaves" xml:space="preserve">
+    <value>Leaves exceeded the available leaves.</value>
+  </data>
+  <data name="Leaves_Exceed_Future_Days" xml:space="preserve">
+    <value>Leaves exceeded to the future day(s).</value>
+  </data>
+  <data name="Leaves_Exceed_Maximum_Leaves" xml:space="preserve">
+    <value>Leaves are exceeded to the maximum leaves.</value>
+  </data>
+  <data name="Leaves_Exceed_Past_Days" xml:space="preserve">
+    <value>Leaves exceeded the past day(s).</value>
+  </data>
+  <data name="Leaves_Exceed_The_Available_Leaves" xml:space="preserve">
+    <value>Leaves exceeded the available leaves.</value>
+  </data>
+  <data name="Leaves_Exceed_The_Future_Day_s_" xml:space="preserve">
+    <value>Leaves exceeded the future day(s).</value>
+  </data>
+  <data name="Leaves_Exceed_The_Past_Day_s_" xml:space="preserve">
+    <value>Leaves exceeded the past day(s).</value>
+  </data>
+  <data name="Leaves_Not_Avaible_To_Apply" xml:space="preserve">
+    <value>No leaves are available to apply.</value>
+  </data>
+  <data name="Leave_Already_Approved" xml:space="preserve">
+    <value>This leave has already been approved.</value>
+  </data>
+  <data name="LEAVE_ALREADY_CANCELLED" xml:space="preserve">
+    <value>Leave already cancelled</value>
+  </data>
+  <data name="Leave_Already_Rejected" xml:space="preserve">
+    <value>This leave has been rejected.</value>
+  </data>
+  <data name="Leave_Applied_For_This_Day(s)" xml:space="preserve">
+    <value>Sorry! Leave is already applied for this day(s)</value>
+  </data>
+  <data name="Leave_Approved_For_This_Days" xml:space="preserve">
+    <value>Sorry!  your applied leave is approved for these days</value>
+  </data>
+  <data name="LEAVE_TYPE_NOT_ACCEPT_HALF_DAY_LEAVES" xml:space="preserve">
+    <value>Sorry! The selected leave type doesn't accept half-day leaves.</value>
+  </data>
+  <data name="Loan_deducation_date_should_be_greaterthan_or_equal_to_the_loan_release_date" xml:space="preserve">
+    <value>The loan deduction date should be greater than or equal to the loan release date.</value>
+  </data>
+  <data name="Location_There_In_Exception" xml:space="preserve">
+    <value>The same location has been selected in exceptions, please change the location.</value>
+  </data>
+  <data name="Login_User_Does_Not_Belongs_To_Any_Team" xml:space="preserve">
+    <value>Login user does't belongs to any team</value>
+  </data>
+  <data name="Marriage_Anniversery_Should_Be_Greater_Than_Date_Of_Birth" xml:space="preserve">
+    <value>Marriage anniversary should be greater than the date of birth.</value>
+  </data>
+  <data name="MAX_LEAVES_GREATER_THEN_OR_EQUAL_TO_MIN_LEAVES" xml:space="preserve">
+    <value>Maximum leaves should be greater than or equal to minimum leaves.</value>
+  </data>
+  <data name="Monthly_Amount_Should_Be_Less_Than_Loan_Amount" xml:space="preserve">
+    <value>Monthly amount should be less than the loan amount.</value>
+  </data>
+  <data name="Monthly_Salary_Should_Be_MoreThen_Zero" xml:space="preserve">
+    <value>Employee monthly salary should be more then zero.</value>
+  </data>
+  <data name="Name_already_exists" xml:space="preserve">
+    <value>This name as of now exists.</value>
+  </data>
+  <data name="Name_Should_Not_Be_Same" xml:space="preserve">
+    <value>The name should not be the same.</value>
+  </data>
+  <data name="NEW_BALANCE_SHOULD_NOT_BE_NEGATIVE" xml:space="preserve">
+    <value>The new balance should not be negative.</value>
+  </data>
+  <data name="New_Password_Should_Be_Different_From_Old_Password" xml:space="preserve">
+    <value>New Password cannot be same as your last five passwords. Please choose a different password.</value>
+  </data>
+  <data name="Not_Possible_To_Transfer" xml:space="preserve">
+    <value>This ticket is closed.</value>
+  </data>
+  <data name="No_Questions_Found" xml:space="preserve">
+    <value>No questions found</value>
+  </data>
+  <data name="No_Result_Found" xml:space="preserve">
+    <value>No result found</value>
+  </data>
+  <data name="Number_Already_Exists" xml:space="preserve">
+    <value>This number already exists.</value>
+  </data>
+  <data name="Only_One_Record_Is_Accepted" xml:space="preserve">
+    <value>Only one record can be accepted for settings.</value>
+  </data>
+  <data name="Pan_Number_Already_Exists" xml:space="preserve">
+    <value>This pan number already exists.</value>
+  </data>
+  <data name="Paper_is_in_live" xml:space="preserve">
+    <value>Once paper moved to live, changes can't be done</value>
+  </data>
+  <data name="Paper_Name_Already_Exist" xml:space="preserve">
+    <value>Paper name already exist</value>
+  </data>
+  <data name="Paper_Not_Exist" xml:space="preserve">
+    <value>Paper not exist</value>
+  </data>
+  <data name="Please_Add_Questions" xml:space="preserve">
+    <value>Please add questions</value>
+  </data>
+  <data name="Please_Contact_Administrator" xml:space="preserve">
+    <value>Please contact the administrator.</value>
+  </data>
+  <data name="Please_Enable_Status_To_Move_Test_To_Live" xml:space="preserve">
+    <value>Please enable the status to move test to live</value>
+  </data>
+  <data name="Please_Give_Allocation_Emp_Screen" xml:space="preserve">
+    <value>Please give the allocation emp screen.</value>
+  </data>
+  <data name="Please_Give_Valid_Response" xml:space="preserve">
+    <value>Please enter your response </value>
+  </data>
+  <data name="Question_Already_Exists" xml:space="preserve">
+    <value>Question already exists</value>
+  </data>
+  <data name="Regx_Aadhar" xml:space="preserve">
+    <value>^[2-9]{1}[0-9]{3}[ -]?[0-9]{4}[ -]?[0-9]{4}$</value>
+  </data>
+  <data name="Regx_Email" xml:space="preserve">
+    <value>\A(?:[a-z0-9!#$%&amp;amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;amp;'*+/=?^_`{|}~-]+)*@(?:\A(?:[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&amp;'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z</value>
+  </data>
+  <data name="Regx_Email_Validation" xml:space="preserve">
+    <value>^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$</value>
+  </data>
+  <data name="Regx_IFSC_Code" xml:space="preserve">
+    <value>^[A-Z]{4}0[A-Z0-9]{6}$</value>
+  </data>
+  <data name="Regx_Mobile_Number" xml:space="preserve">
+    <value>^[0-9]{10}$</value>
+  </data>
+  <data name="Regx_Pan" xml:space="preserve">
+    <value>^(?i)[A-Z]{3}[ABCFGHLJPTF]{1}[A-Z]{1}[0-9]{4}[A-Z]{1}$</value>
+  </data>
+  <data name="Regx_Passport" xml:space="preserve">
+    <value>[A-Z]{1}[0-9]{7}</value>
+  </data>
+  <data name="Regx_Tan" xml:space="preserve">
+    <value>([aA-zZ]){4}([0-9]){5}([aA-zZ]){1}$</value>
+  </data>
+  <data name="Reg_Account_No" xml:space="preserve">
+    <value>[0-9]$</value>
+  </data>
+  <data name="Reg_Phone" xml:space="preserve">
+    <value>@"^[0-9]{10}$</value>
+  </data>
+  <data name="Release_date_must_be_greater_than_or_equal_to_the_employee_joining_date" xml:space="preserve">
+    <value>Release date must be greater than or equal to the employee joining date.</value>
+  </data>
+  <data name="Resignation_Approval_Is_Greater_Than_Are_Equal_To_Resigned" xml:space="preserve">
+    <value>Resignation approval should be greater than or equal to resigned.</value>
+  </data>
+  <data name="Selected_LeaveType_Alredy_Exist" xml:space="preserve">
+    <value>Selected leave type already exist for this employee</value>
+  </data>
+  <data name="Selected_User_Is_Manager" xml:space="preserve">
+    <value>Managers are not allowed under groups</value>
+  </data>
+  <data name="Settings_For_This_Origination_Already_Added." xml:space="preserve">
+    <value>Settings for this origination have been added.</value>
+  </data>
+  <data name="Slab_Already_Exists" xml:space="preserve">
+    <value>This slab already exists.</value>
+  </data>
+  <data name="Something_Went_Wrong" xml:space="preserve">
+    <value>Sorry! Something went wrong</value>
+  </data>
+  <data name="Sorry!!,_You_Can_Not_Update_The_Loan_Once_Recovery_Is_Started" xml:space="preserve">
+    <value>Sorry! You cannot update the loan once the recovery has started.</value>
+  </data>
+  <data name="Sorry_You_Does_Not_Have_Access" xml:space="preserve">
+    <value>Sorry! you don't have access</value>
+  </data>
+  <data name="State_Name_already_exists" xml:space="preserve">
+    <value>This state name as of now exists.</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status is required.</value>
+  </data>
+  <data name="Tan_Number_Already_Exists" xml:space="preserve">
+    <value>Tan number already exists.</value>
+  </data>
+  <data name="There_Is_No_Replication_Data" xml:space="preserve">
+    <value>There is no replication data </value>
+  </data>
+  <data name="The_Financial_Year_Already_Added." xml:space="preserve">
+    <value>The financial year has been added.</value>
+  </data>
+  <data name="The_Financial_Year_Should_Have_Only_12_Months." xml:space="preserve">
+    <value>The financial year should have only 12 months.</value>
+  </data>
+  <data name="The_Previous_Financial_Year_Still_In_Process." xml:space="preserve">
+    <value>The previous financial year is still in the process.</value>
+  </data>
+  <data name="The_selected_financial_year_is_closed" xml:space="preserve">
+    <value>The selected financial year is closed.</value>
+  </data>
+  <data name="TICKET_IS_CLOSED" xml:space="preserve">
+    <value>Ticket is closed so, not possbile to do changes</value>
+  </data>
+  <data name="To_Date_Always_Greater_than_or_Equal_to_From_Date" xml:space="preserve">
+    <value>To date always greater than or equal to from date.</value>
+  </data>
+  <data name="To_Date_Is_Always_Greater_Than_Or_Equal_To_From_Date" xml:space="preserve">
+    <value>To date always greater than or equal to from date.</value>
+  </data>
+  <data name="UAN_Number_Already_Exists" xml:space="preserve">
+    <value>UAN number already exists.</value>
+  </data>
+  <data name="Under_Training_Period" xml:space="preserve">
+    <value>You cannot apply for leaves in the training period.</value>
+  </data>
+  <data name="Uninstalled_On_Is_Required" xml:space="preserve">
+    <value>Uninstalled on is required!</value>
+  </data>
+  <data name="User_Name_Already_Exist" xml:space="preserve">
+    <value>This username already exists, please try another one.</value>
+  </data>
+  <data name="Week_Already_Exist" xml:space="preserve">
+    <value>Week of already exist.</value>
+  </data>
+  <data name="Week_Date" xml:space="preserve">
+    <value>Week date is required.</value>
+  </data>
+  <data name="WEEK_DATE_ALREADY_EXIST" xml:space="preserve">
+    <value>This week date already exists.</value>
+  </data>
+  <data name="WEEK_DAY_ALREADY_EXIST" xml:space="preserve">
+    <value>This weekday already exists.</value>
+  </data>
+  <data name="Week_Day_Required" xml:space="preserve">
+    <value>A weekday is required.</value>
+  </data>
+  <data name="Week_In_Year" xml:space="preserve">
+    <value>A week in a year is required.</value>
+  </data>
+  <data name="Week_No_In_Month" xml:space="preserve">
+    <value>A week number in a month required.</value>
+  </data>
+  <data name="WFH_Already_Approved" xml:space="preserve">
+    <value>WFH has been approved.</value>
+  </data>
+  <data name="WFH_Already_Approved_Dates" xml:space="preserve">
+    <value>WFH has been approved for these dates.</value>
+  </data>
+  <data name="WFH_Already_Rejected" xml:space="preserve">
+    <value>WFH has been rejected.</value>
+  </data>
+  <data name="You_DoNot_Have_Permission" xml:space="preserve">
+    <value>Sorry! You do not have the permission.</value>
+  </data>
+</root>

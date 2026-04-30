@@ -1,0 +1,49 @@
+import React from 'react'
+import { Card, CardBody, Col, Input, Label, Row, Button } from 'reactstrap'
+import DataTable from '../../../components/table/DataTable';
+import UpdateTable from '../../HOC/withDataTable';
+import PaymentInfoService from 'services/PayRoll/PaymentInfoService';
+import { EmployeeImageCell, EmployeeImageProps } from 'domain/Organization/ImageDetails/ConstImage';
+
+const title = 'Payment Info'
+const fields = [
+    { ...EmployeeImageProps, Cell: ({ row }) => EmployeeImageCell(row.original.employeeId) },
+    { name: 'employee', label: 'Employee Name', type: 'string' },
+    { name: 'no', label: 'Employee Code', type: 'string' },
+    { name: 'payMode', label: 'How Would You Like To Pay', type: 'custom',
+    Cell: ({ value, row }) => {
+        return <div>{value === 1 ? "Bank Transfer" : value === 2 ? 'Online': ''}</div>
+    }
+},
+]
+function PaymentInfoList(props) {
+    const searchCard = () => {
+        return (
+            <Card className='mb-1'>
+                <CardBody>
+                    <Row>
+                        <Col md="2">
+                            <Label><strong>Employee</strong></Label>
+                            <Input name='name' className="form-control form-control-sm"
+                                value={props.searchData['name']}
+                                onChange={(e) => props.handleOnChange(e.target.name, e.target.value)} />
+                        </Col>
+
+                        <Col md="1" className='mt-3'>
+                            <Button className="mr-3  btn-icon btn-icon-only btn-secondary btn-sm"
+                                onClick={(e) => props.handleSearch(0)} style={{ marginTop: '5px' }}>
+                                <i className="pe-7s-search btn-icon-wrapper">
+                                </i>
+                            </Button>
+                        </Col>
+                    </Row>
+                </CardBody>
+            </Card>
+        )
+    }
+    return (
+        <DataTable {...props} searchCard={searchCard} />
+    )
+
+}
+export default UpdateTable(PaymentInfoList, { ...PaymentInfoService.paginate() }, fields, '', title, '', '')

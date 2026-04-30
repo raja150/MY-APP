@@ -1,0 +1,205 @@
+import axios from 'axios';
+import { notifyError } from 'components/alert/Toast';
+import { Input, Radio, RWDropdownList  } from 'components/dynamicform/Controls';
+import MothAndYearPicker from 'components/dynamicform/Controls/MothAndYearPicker';
+import ReportAsyncSearch from 'components/dynamicform/Controls/ReportAsyncSeach';
+import Loading from 'components/Loader';
+import PageHeader from 'Layout/AppMain/PageHeader';
+import * as _ from 'lodash';
+import queryString from 'query-string';
+import React, { useEffect, useState } from 'react';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
+// import { useHistory } from 'react-router-dom';
+import { Card, CardBody, Col, Row } from 'reactstrap';
+import * as date from 'utils/date';
+import APIService from '../../services/apiservice';
+import CodingMap from "./JSONNew/MappingReports";
+import ReportSearchComponent from './ReportsSearchComponent';
+
+import SessionStorageService from '../../services/SessionStorage';
+import { faFileExcel } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
+function ReportsNew(props) {
+    //getting search parameters which are exist in searchUrl
+    let queryProps = { ...queryString.parse(props.location.search) };
+    const [state, setState] = useState({
+        moduleId: '',
+        moduleName: '',
+        reportId: '',
+        modules: [],
+        reports: [],
+        reportJson: {},
+        isLoading: true,
+        label: '', roleId: ''
+    });
+    const [tableLoading, setTableLoading] = useState(true);
+    const [filterValues, setFilterValues] = useState({});
+    const [clearData, setClearData] = useState(false);
+
+ 
+    useEffect(() => {
+        const fetchData = async () => {
+            setState({ ...state, isLoading: true });
+            let modules = [], reports = [], json = {}, moduleId = '',
+                reportId = '', label = '', moduleName = '', reportName = '';
+            const info = SessionStorageService.getUserInfo();
+            const infoJson = info ? JSON.parse(info) : {};
+            await APIService.getAsync(`AppReport/RoleReportModule/${infoJson.roleId}`).then(response => {
+                modules = response.data;
+            }).catch(err => {
+                notifyError(err.message);
+            });
+            //getting reports from API based on moduleId 
+            //When toggle between tabs
+            if (!_.isEmpty(queryProps) && queryProps.module) {
+
+                let module = modules.find(x => x.name == queryProps.module)
+                if (module) {
+                    await APIService.getAsync(`AppReport/RoleReports/${module.id}/${infoJson.roleId}`).then(res => {
+                        reports = res.data
+                    }).catch(err => {
+                        notifyError(err.message);
+                    });
+                    let report = reports.find(x => x.name == queryProps.report)
+                    moduleId = module.id;
+                    reportId = report.reportId;
+                    label = report.label;
+                    moduleName = module.name
+                    json = CodingMap[report.name];
+                    reportName = report.name
+                }
+                setTableLoading(false)
+            }
+
+            setState({
+                ...state, modules: modules, tableLoading: false, isLoading: false,
+                moduleId: moduleId, reportId: reportId, label: label, moduleName: moduleName,
+                reports: reports, reportJson: json, reportName: reportName, roleId: infoJson ? infoJson.roleId : ''
+            })
+        };
+        fetchData();
+    }, [props.location.search])
+
+    const handleModuleChange = async (name, value, selected) => {
+        if (selected) {
+            await APIService.getAsync(`AppReport/RoleReports/${value}/${state.roleId}`).then(res => {
+                setState({
+                    ...state, [name]: value, module: selected.name,
+                    reports: res.data, reportId: '', moduleName: selected.name
+                })
+            }).catch(err => {
+                notifyError(err.message);
+            });
+        } else {
+            setState({ ...state, moduleId: '', reportId: '', reports: [], moduleName: '' })
+        }
+        setTableLoading(true);
+    }
+
+    const handleReportChange = async (name, value, selected) => {
+        let initialValues = {}
+        if (selected) {
+            const json = CodingMap[selected.name];
+            initialValues["report"] = selected.name
+            initialValues["module"] = state.moduleName
+            json && json.filters.length > 0 && json.filters.sort((a, b) => a.orderBy - b.orderBy).forEach((field) => {
+                switch (field.field) {
+                    case "DatePicker":
+                        initialValues[field.name] = date.getTodayDate();
+                        break;
+                    case "AsyncDropdown":
+                        field['selected'] = ''
+                        initialValues[field.name] = '';
+                        break;
+                    default:
+                        initialValues[field.name] = field.default ? field.default : ''
+                        break;
+                }
+            });
+
+            setFilterValues(initialValues)
+            setState({
+                ...state, [name]: value, reportJson: json, reportName: selected.name,
+                label: selected.label, reportsData: []
+            });
+        } else {
+            setState({
+                ...state, reportJson: {}, reportsData: [], reportId: '', reportName: ''
+            });
+        }
+        setTableLoading(false);
+        setClearData(true) 
+    }
+    return (
+        <div>
+            {
+                state.isLoading ? <Loading /> :
+                    <div>
+                        <div >
+                            <Card>
+                                <CardBody>
+                                    <Row>
+                                        <Col xs='3'>
+                                            <RWDropdownList {...{
+                                                name: 'moduleId', label: 'Modules', valueField: 'id', textField: 'label',
+                                                value: state.moduleId, type: 'string', values: state.modules,
+                                                error: false, touched: false
+                                            }} handlevaluechange={(e, v, { selected }) => {
+                                                handleModuleChange(e, v, selected)
+                                            }} />
+                                        </Col>
+                                        <Col xs='3'>
+                                            <RWDropdownList {...{
+                                                name: 'reportId', label: 'Reports', valueField: 'reportId', textField: 'label',
+                                                value: state.reportId, type: 'string', values: state.reports,
+                                                error: false, touched: false
+                                            }} handlevaluechange={(e, v, { selected }) => {
+                                                handleReportChange(e, v, selected)
+                                            }} />
+                                        </Col>
+                                        <Col xs='3'></Col>
+                                        {state.reportName &&
+                                            <Col xs='3'>
+                                                <ReactHTMLTableToExcel
+                                                    id="test-table-xls-button"
+                                                    className="btn btn-primary mr-2 mt-2 btn-actions-pane-right btn-icon-only float-right btn-sm"//"download-table-xls-button"
+                                                    table="table-to-xls"
+                                                    filename={state.reportName}
+                                                    sheet="Sheet1"
+                                                    buttonText="Excel"
+                                                >
+                                                    <FontAwesomeIcon icon={faFileExcel} size='2x' />
+                                                </ReactHTMLTableToExcel>
+                                            </Col>}
+                                    </Row>
+                                </CardBody>
+                            </Card>
+                            {
+                                !_.isEmpty(state.reportJson) && !tableLoading &&
+                                <Card className='mt-2'>
+                                    <CardBody>
+                                        <Row>
+                                            <Col xs='12'>
+                                                <PageHeader title={state.label} />
+                                            </Col>
+                                        </Row>
+                                        <ReportSearchComponent filters={state.reportJson.filters}
+                                            json={state.reportJson} location={props.location}
+                                            module={state.moduleName} reportName={state.reportName}
+                                            filterValues={filterValues} setFilterValues={setFilterValues}
+                                        // clearData={clearData} setClearData={setClearData}
+                                        />
+                                    </CardBody>
+                                </Card>
+                            }
+
+                        </div>
+                    </div>
+            }
+        </div>
+    )
+}
+
+export default ReportsNew

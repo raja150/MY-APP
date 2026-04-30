@@ -1,0 +1,58 @@
+<?xml version="1.0" standalone="yes"?>
+<NewDataSet>
+  <Table1>
+    <MailId>jhkrishna@mail.avontixindia.com</MailId>
+    <DateOfReport>12/1/2020 12:00:00 AM</DateOfReport>
+    <EmpCode>Avontix274</EmpCode>
+    <EmpName>it's me</EmpName>
+    <Designation>Software</Designation>
+    <PFNo>asfdasf3234</PFNo>
+    <Month>November - 2020</Month>
+    <ESINo>-</ESINo>
+    <WorkingDays>25</WorkingDays>
+    <PresentedDays>23</PresentedDays>
+    <LeavesTaken>1</LeavesTaken>
+    <LOP>1</LOP>
+    <BalanceCL>5</BalanceCL>
+    <BalanceEL>8</BalanceEL>
+    <BASIC>1500</BASIC>
+    <HRA>5000</HRA>
+    <MedicalAndTransAllow>1</MedicalAndTransAllow>
+    <FoodCoupons>0</FoodCoupons>
+    <SpecialAllow>0</SpecialAllow>
+    <Arrears>0</Arrears>
+    <Incentives>1</Incentives>
+    <ProfessionalTax>200</ProfessionalTax>
+    <PF>1500</PF>
+    <ESI>0</ESI>
+    <IncomeTax>100</IncomeTax>
+    <SalaryAdvance>0</SalaryAdvance>
+    <LOPForLeaves>123</LOPForLeaves>
+    <Deductions>0</Deductions>
+    <GrossEarnings>123</GrossEarnings>
+    <GrossDeductions>123</GrossDeductions>
+    <NetPayble>12345</NetPayble>
+    <NetPaybleText>Fifty two thousand</NetPaybleText>
+    <BabkAccNo>Fifty two thousand</BabkAccNo>
+    <FaxFilesAndArrears>0</FaxFilesAndArrears>
+    <SundayIncentives>2</SundayIncentives>
+    <ProductionIncentives>0</ProductionIncentives>
+    <SpotIncentives>4</SpotIncentives>
+    <PunctualityIncentive>10</PunctualityIncentive>
+    <CentumDoubleCentumClub>6</CentumDoubleCentumClub>
+    <FirstMinuteIncentive>0</FirstMinuteIncentive>
+    <OtherIncentives>8</OtherIncentives>
+    <NightShiftIncentives>10</NightShiftIncentives>
+    <WeeklyStarIncentives>0</WeeklyStarIncentives>
+    <TTeamIncentives>12</TTeamIncentives>
+    <DoublePay>0</DoublePay>
+    <OtherDeductions>14</OtherDeductions>
+    <InternalQualityFeedback>0</InternalQualityFeedback>
+    <ExternalQualityFeedback>16</ExternalQualityFeedback>
+    <LateComingDeductions>0</LateComingDeductions>
+    <UnauthorizedLeaveDeduction>18</UnauthorizedLeaveDeduction>
+    <TotalIncentives>0</TotalIncentives>
+    <TotalDeductions>20</TotalDeductions>
+    <LIAmount>8</LIAmount>
+  </Table1>
+</NewDataSet>
