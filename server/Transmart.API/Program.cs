@@ -22,8 +22,6 @@ using TranSmart.Core.Result;
 using TranSmart.Core.Util;
 using TranSmart.Data;
 using TranSmart.Data.DependencyInjection;
-using TranSmart.Data.Repository.HelpDesk;
-using TranSmart.Data.Repository.Leave;
 using TranSmart.Service;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder();
@@ -88,9 +86,8 @@ builder.Services.AddMvc().
 builder.Services.RegisterAssemblyPublicNonGenericClasses(Assembly.GetAssembly(typeof(IBaseService<>)))
 	.Where(c => c.Name.EndsWith("Service")).AsPublicImplementedInterfaces(ServiceLifetime.Scoped);
 
-_ = builder.Services.RegisterAssemblyPublicNonGenericClasses(Assembly.GetAssembly(typeof(ILeaveBalanceRepository)))
-  .AsPublicImplementedInterfaces(ServiceLifetime.Scoped);
-_ = builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+//_ = builder.Services.RegisterAssemblyPublicNonGenericClasses(Assembly.GetAssembly(typeof(ILeaveBalanceRepository)))
+//.AsPublicImplementedInterfaces(ServiceLifetime.Scoped);
 _ = builder.Services.AddScoped<IApplicationUser, ApplicationUser>();
 _ = builder.Services.AddScoped<ITokenService, TokenService>();
 _ = builder.Services.AddScoped<ISsoService, SsoService>();

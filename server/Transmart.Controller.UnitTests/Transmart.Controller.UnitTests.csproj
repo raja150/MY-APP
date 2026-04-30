@@ -26,8 +26,4 @@
     <ProjectReference Include="..\Transmart.API\TranSmart.API.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SelfService\" />
-  </ItemGroup>
-
 </Project>

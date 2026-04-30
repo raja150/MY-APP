@@ -1,23 +1,5 @@
-﻿using DocumentFormat.OpenXml.Bibliography;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Query;
-using MockQueryable.Moq;
-using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Transmart.Services.UnitTests.Services.Payroll.Data;
-using TranSmart.Core;
+﻿using System;
 using TranSmart.Core.Util;
-using TranSmart.Data;
-using TranSmart.Domain.Entities.Leave;
-using TranSmart.Domain.Entities.Organization;
-using TranSmart.Domain.Entities.Payroll;
-using TranSmart.Service;
-using TranSmart.Service.Payroll;
 using Xunit;
 
 namespace Transmart.Services.UnitTests.Core
@@ -65,7 +47,7 @@ namespace Transmart.Services.UnitTests.Core
 		public void DOBFromAge_CalculateDOB_Age()
 		{
 			var response = DateUtil.DOBFromAge(23);
-			Assert.Equal(new DateTime(DateTime.Now.Year - 23, DateTime.Today.Month, 1), 
+			Assert.Equal(new DateTime(DateTime.Now.Year - 23, DateTime.Today.Month, 1),
 				response);
 		}
 

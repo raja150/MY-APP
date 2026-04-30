@@ -16,3 +16,9 @@
 /server/Transmart.API.IntegrationTest/bin
 /server/Transmart.API.IntegrationTest/obj
 /server/Transmart.Data/obj
+/server/Transmart.API/bin/Debug/net6.0
+/server/Transmart.Core/bin/Debug/net6.0
+/server/Transmart.Data/bin/Debug/net6.0
+/server/Transmart.Domain/bin/Debug/net6.0
+/server/Transmart.Service/bin/Debug/net6.0
+/server/Transmart.TS4API/bin/Debug/net6.0

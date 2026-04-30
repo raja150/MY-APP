@@ -39,16 +39,7 @@ namespace TranSmart.Data
 		public DbSet<RolePrivilege> RolePrivileges { get; set; }
 		public DbSet<RoleReportPrivilege> RoleReportPrivileges { get; set; }
 
-		public DbSet<AplicationAuditLog> AuditLog { get; set; }
-		public DbSet<UserAudit> User_Audit { get; set; }
-		public DbSet<EmployeePayInfoAudit> EmployeePayInfo_Audit { get; set; }
-		public DbSet<EmployeePayInfoStatusAudit> EmployeePayInfoStatus_Audit { get; set; }
-		public DbSet<Replication> Replication { get; set; }
-		public DbSet<UserPasswords> UserPasswords { get; set; }
-		public DbSet<Token> Token { get; set; }
-		public DbSet<DepartmentEmployee> DepartmentEmployee { get; set; }
-		public DbSet<EmployeeDevice> EmployeeDevice { get; set; }
-		public DbSet<Performance> Performance { get;set; }
+		
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);

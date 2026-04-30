@@ -36,7 +36,6 @@
   <ItemGroup>
     <Folder Include="Core\Attributes\" />
     <Folder Include="Core\Compare\" />
-    <Folder Include="Data.Repository\" />
     <Folder Include="ValidatorTest\" />
   </ItemGroup>
 

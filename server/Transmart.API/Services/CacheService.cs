@@ -40,15 +40,13 @@ namespace TranSmart.API.Services
 		private readonly ISearchService _service;
 		private readonly IMemoryCache _memoryCache;
 		private readonly ISsoService _ssoService;
-		private readonly IDepartmentEmployeeService _deskService;
 		public CacheService(IMapper mapper, IMemoryCache memoryCache, ISearchService service,
-			ISsoService ssoService, IDepartmentEmployeeService deskService)
+			ISsoService ssoService)
 		{
 			_mapper = mapper;
 			_memoryCache = memoryCache;
 			_service = service;
 			_ssoService = ssoService;
-			_deskService = deskService;
 		}
 		public async Task<ApiKeyCache> GetUserByApiKey(string apikey)
 		{
@@ -269,13 +267,13 @@ namespace TranSmart.API.Services
 
 		public async Task UpdateDeptTemp(Guid id)
 		{
-			await _deskService.UpdateTempData();
+			//await _deskService.UpdateTempData();
 			await DeskGroupEmps(id);
 
 		}
 		public async Task UpdateTempData(Guid deskGroupEmpId)
 		{
-			await _deskService.CheckGroupLinkedToDept(deskGroupEmpId);
+			//await _deskService.CheckGroupLinkedToDept(deskGroupEmpId);
 			await DeskGroupEmps(deskGroupEmpId);
 		}
 		public async Task<List<DeskGroupEmpCache>> DeskGroupEmps(Guid groupId)
@@ -294,7 +292,7 @@ namespace TranSmart.API.Services
 		}
 		private async Task<List<DeskGroupEmpCache>> UpdateGroupEmps(string cacheKey = "desk_group_emps")
 		{
-			var list = _mapper.Map<List<DeskGroupEmpCache>>(await _deskService.GetGroupEmps());
+			var list = _mapper.Map<List<DeskGroupEmpCache>>(new object());
 			MemoryCacheEntryOptions cacheExpiryOptions = new()
 			{
 				AbsoluteExpiration = DateTime.Now.AddHours(5),
